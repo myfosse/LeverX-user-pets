@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5433/pets}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    platform: POSTGRESQL
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: embedded
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    default-property-inclusion: NON_NULL
+
