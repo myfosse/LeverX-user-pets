@@ -12,7 +12,10 @@ import com.leverx.entity.Cat;
 import com.leverx.repository.CatRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.CatService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /** @author Andrei Yahorau */
 @Service
@@ -21,12 +24,14 @@ public class CatServiceImpl implements CatService {
   private final CatRepository catRepository;
   private final UserRepository userRepository;
 
+  @Autowired
   public CatServiceImpl(final CatRepository catRepository, final UserRepository userRepository) {
     this.catRepository = catRepository;
     this.userRepository = userRepository;
   }
 
   @Override
+  @Transactional
   public CatResponseDto save(final CatRequestDto catRequestDto) {
 
     Cat cat = convertCatRequestToEntity(catRequestDto);
@@ -39,6 +44,7 @@ public class CatServiceImpl implements CatService {
   }
 
   @Override
+  @Transactional
   public CatResponseDto update(final long catId, final CatRequestDto catRequestDto) {
 
     if (!catRepository.existsById(catId)) {
@@ -55,22 +61,26 @@ public class CatServiceImpl implements CatService {
   }
 
   @Override
+  @Transactional
   public CatResponseDto findById(final long id) {
     return convertCatEntityToResponse(
         catRepository.findById(id).orElseThrow(EntityNotFoundException::new));
   }
 
   @Override
+  @Transactional
   public List<CatResponseDto> getAllByOwnerId(final long ownerId) {
     return convertListOfEntityToListOfResponse(catRepository.findAllByOwnerId(ownerId));
   }
 
   @Override
+  @Transactional
   public List<CatResponseDto> getAll() {
     return convertListOfEntityToListOfResponse(catRepository.findAll());
   }
 
   @Override
+  @Transactional
   public void delete(final long id) {
     catRepository.deleteById(id);
   }

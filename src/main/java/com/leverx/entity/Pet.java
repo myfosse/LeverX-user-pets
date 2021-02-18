@@ -26,10 +26,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "pets")
 @Inheritance(strategy = JOINED)
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pet {
+public abstract class Pet {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

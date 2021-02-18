@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.UserResponseDto;
@@ -22,17 +24,20 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
 
+  @Autowired
   public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
   @Override
+  @Transactional
   public UserResponseDto save(final UserRequestDto userRequestDto) {
     return convertUserEntityToResponse(
             userRepository.save(convertUserRequestToEntity(userRequestDto)));
   }
 
   @Override
+  @Transactional
   public UserResponseDto update(final long userId, final UserRequestDto userRequestDto) {
 
     if (!userRepository.existsById(userId)) {
@@ -46,17 +51,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public UserResponseDto findById(final long id) {
     return convertUserEntityToResponse(
         userRepository.findById(id).orElseThrow(EntityNotFoundException::new));
   }
 
   @Override
+  @Transactional
   public List<UserResponseDto> getAll() {
     return convertListOfEntityToListOfResponse(userRepository.findAll());
   }
 
   @Override
+  @Transactional
   public void delete(final long id) {
     userRepository.deleteById(id);
   }
