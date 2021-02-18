@@ -1,5 +1,6 @@
 package com.leverx.entity;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -16,16 +17,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author Andrei Yahorau
- */
+/** @author Andrei Yahorau */
 @Entity
 @Table(name = "pets")
 @Inheritance(strategy = JOINED)
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pet {
@@ -39,7 +40,7 @@ public class Pet {
 
   private LocalDate birthdate;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "user_id")
   private User owner;
 }

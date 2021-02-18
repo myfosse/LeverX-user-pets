@@ -3,17 +3,19 @@ package com.leverx.entity;
 import static javax.persistence.GenerationType.IDENTITY;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -36,6 +39,5 @@ public class User {
 
   private String email;
 
-  @OneToMany(mappedBy = "owner")
-  private List<Pet> pets = new ArrayList<>();
+  private LocalDate birthdate;
 }
