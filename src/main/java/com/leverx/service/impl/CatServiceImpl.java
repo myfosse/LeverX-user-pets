@@ -1,6 +1,7 @@
 package com.leverx.service.impl;
 
 import static com.leverx.dto.converter.CatConverterDto.*;
+import static com.leverx.entity.EPetType.CAT;
 
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class CatServiceImpl implements CatService {
     cat.setOwner(
         userRepository
             .findById(catRequestDto.getOwnerId())
-            .orElseThrow(EntityNotFoundException::new));
+            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+    cat.setPetType(CAT);
 
     return convertCatEntityToResponse(catRepository.save(cat));
   }
@@ -47,15 +49,17 @@ public class CatServiceImpl implements CatService {
   @Transactional
   public CatResponseDto update(final long catId, final CatRequestDto catRequestDto) {
 
-    if (!catRepository.existsById(catId)) {
-      throw new EntityNotFoundException("No entity with such id");
-    }
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
-            userRepository
-                    .findById(catRequestDto.getOwnerId())
-                    .orElseThrow(EntityNotFoundException::new));
-    cat.setId(catId);
+        userRepository
+            .findById(catRequestDto.getOwnerId())
+            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+    cat.setId(
+        catRepository
+            .findById(catId)
+            .orElseThrow(() -> new EntityNotFoundException("There is no such cat"))
+            .getId());
+    cat.setPetType(CAT);
 
     return convertCatEntityToResponse(catRepository.save(cat));
   }
@@ -64,13 +68,9 @@ public class CatServiceImpl implements CatService {
   @Transactional
   public CatResponseDto findById(final long id) {
     return convertCatEntityToResponse(
-        catRepository.findById(id).orElseThrow(EntityNotFoundException::new));
-  }
-
-  @Override
-  @Transactional
-  public List<CatResponseDto> getAllByOwnerId(final long ownerId) {
-    return convertListOfEntityToListOfResponse(catRepository.findAllByOwnerId(ownerId));
+        catRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("There is no such cat")));
   }
 
   @Override
@@ -82,6 +82,9 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public void delete(final long id) {
+    if (!catRepository.existsById(id)) {
+      throw new EntityNotFoundException("There is no such dog");
+    }
     catRepository.deleteById(id);
   }
 }

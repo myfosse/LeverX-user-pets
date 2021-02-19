@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9d993438-5d16-4869-9df9-c81dfc07d19e",
+		"_postman_id": "63e1cf9a-a6ac-4639-ad9e-ca3b9474f0e8",
 		"name": "User-Pets",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,24 +8,6 @@
 		{
 			"name": "Cat Controller",
 			"item": [
-				{
-					"name": "getCatById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/cats/1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cats",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "getAllCats",
 					"request": {
@@ -38,29 +20,6 @@
 							],
 							"path": [
 								"cats"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllCatsByOwnerId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/cats?ownerId=1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cats"
-							],
-							"query": [
-								{
-									"key": "ownerId",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -93,6 +52,24 @@
 					"response": []
 				},
 				{
+					"name": "getCatById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/cats/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cats",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "updateCatById",
 					"request": {
 						"method": "PUT",
@@ -107,13 +84,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/cats/1",
+							"raw": "{{host}}/cats/3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"cats",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -125,13 +102,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/cats/1",
+							"raw": "{{host}}/cats/3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"cats",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -142,24 +119,6 @@
 		{
 			"name": "Dog Controller",
 			"item": [
-				{
-					"name": "getDogById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/dogs/1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"dogs",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "getAllDogs",
 					"request": {
@@ -172,29 +131,6 @@
 							],
 							"path": [
 								"dogs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllDogsByOwnerId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/dogs?ownerId=1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"dogs"
-							],
-							"query": [
-								{
-									"key": "ownerId",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -227,6 +163,24 @@
 					"response": []
 				},
 				{
+					"name": "getDogById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/dogs/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"dogs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "updateDogById",
 					"request": {
 						"method": "PUT",
@@ -241,13 +195,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/dogs/3",
+							"raw": "{{host}}/dogs/2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"dogs",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -259,13 +213,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/dogs/3",
+							"raw": "{{host}}/dogs/2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"dogs",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -276,6 +230,23 @@
 		{
 			"name": "Pet Controller",
 			"item": [
+				{
+					"name": "getAllPets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/pets",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pets"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "getPetById",
 					"request": {
@@ -295,112 +266,10 @@
 					"response": []
 				},
 				{
-					"name": "getAllPets",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/pets",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"pets"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getAllPetsByOwnerId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/pets?ownerId=0",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"pets"
-							],
-							"query": [
-								{
-									"key": "ownerId",
-									"value": "0"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "addPet",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"dog\",\r\n    \"birthdate\": \"1999-10-19\",\r\n    \"ownerId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/pets",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"pets"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updatePetById",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"dog1\",\r\n    \"birthdate\": \"1999-10-19\",\r\n    \"ownerId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/pets/1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"pets",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "deletePetById",
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{host}}/pets/1",
 							"host": [
@@ -419,24 +288,6 @@
 		{
 			"name": "User Controller",
 			"item": [
-				{
-					"name": "getUserById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/users/1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"users",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "getAllUsers",
 					"request": {
@@ -481,6 +332,24 @@
 					"response": []
 				},
 				{
+					"name": "getUserById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "updateUserById",
 					"request": {
 						"method": "PUT",
@@ -513,13 +382,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/users/2",
+							"raw": "{{host}}/users/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -539,6 +408,26 @@
 								"users",
 								"1",
 								"pets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUserPetsByType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/1/pets/cat",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"pets",
+								"cat"
 							]
 						}
 					},

@@ -12,7 +12,7 @@ import lombok.Data;
 
 /** @author Andrei Yahorau */
 @Data
-public abstract class PetRequestDto {
+public class PetRequestDto {
 
   @NotNull private String name;
 

@@ -30,18 +30,23 @@ public class PetServiceImpl implements PetService {
   @Transactional
   public PetResponseDto findById(final long id) {
     return convertPetEntityToResponse(
-        petRepository.findById(id).orElseThrow(EntityNotFoundException::new));
-  }
-
-  @Override
-  @Transactional
-  public List<PetResponseDto> getAllByOwnerId(final long ownerId) {
-    return convertListOfEntityToListOfResponse(petRepository.findAllByOwnerId(ownerId));
+        petRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("There is no such pet")));
   }
 
   @Override
   @Transactional
   public List<PetResponseDto> getAll() {
     return convertListOfEntityToListOfResponse(petRepository.findAll());
+  }
+
+  @Override
+  @Transactional
+  public void delete(final long id) {
+    if (!petRepository.existsById(id)) {
+      throw new EntityNotFoundException("There is no such pet");
+    }
+    petRepository.deleteById(id);
   }
 }

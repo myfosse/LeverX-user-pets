@@ -1,11 +1,9 @@
 package com.leverx.controlller;
 
-import static org.springframework.http.HttpStatus.ACCEPTED;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import java.net.URI;
+import java.util.List;
 
-import java.util.Optional;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leverx.dto.request.CatRequestDto;
+import com.leverx.dto.response.CatResponseDto;
 import com.leverx.payload.response.MessageResponse;
 import com.leverx.service.CatService;
 
@@ -33,37 +30,41 @@ public class CatController {
   private final CatService catService;
 
   @Autowired
-  public CatController(CatService catService) {
+  public CatController(final CatService catService) {
     this.catService = catService;
   }
 
   @GetMapping
-  public @ResponseBody ResponseEntity<?> getAllCats(
-      @RequestParam(value = "ownerId", required = false) final Optional<Long> ownerId) {
-    return new ResponseEntity<>(
-        ownerId.isPresent() ? catService.getAllByOwnerId(ownerId.get()) : catService.getAll(), OK);
+  public ResponseEntity<List<CatResponseDto>> getAll() {
+    return ResponseEntity.ok(catService.getAll());
   }
 
   @PostMapping
-  public @ResponseBody ResponseEntity<?> addCat(
-      @Valid @RequestBody final CatRequestDto catRequestDto) {
-    return new ResponseEntity<>(catService.save(catRequestDto), CREATED);
+  public ResponseEntity<CatResponseDto> add(
+      @Valid @RequestBody final CatRequestDto catRequestDto,
+      final HttpServletRequest request) {
+
+    CatResponseDto catResponseDto = catService.save(catRequestDto);
+
+    return ResponseEntity.created(
+            URI.create(request.getRequestURL().toString() + "/" + catResponseDto.getId()))
+        .body(catResponseDto);
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody ResponseEntity<?> getCatById(@PathVariable final long id) {
-    return new ResponseEntity<>(catService.findById(id), OK);
+  public ResponseEntity<CatResponseDto> getById(@PathVariable final long id) {
+    return ResponseEntity.ok().body(catService.findById(id));
   }
 
   @PutMapping("/{id}")
-  public @ResponseBody ResponseEntity<?> updateCat(
+  public ResponseEntity<CatResponseDto> update(
       @PathVariable final long id, @Valid @RequestBody final CatRequestDto catRequestDto) {
-    return new ResponseEntity<>(catService.update(id, catRequestDto), ACCEPTED);
+    return ResponseEntity.ok().body(catService.update(id, catRequestDto));
   }
 
   @DeleteMapping("/{id}")
-  public @ResponseBody ResponseEntity<?> deleteCat(@PathVariable final long id) {
+  public ResponseEntity<MessageResponse> delete(@PathVariable final long id) {
     catService.delete(id);
-    return new ResponseEntity<>(new MessageResponse("Cat deleted"), ACCEPTED);
+    return ResponseEntity.ok().body(new MessageResponse("Cat deleted"));
   }
 }

@@ -9,7 +9,7 @@ public interface PetService {
 
   PetResponseDto findById(final long id);
 
-  List<PetResponseDto> getAllByOwnerId(final long ownerId);
-
   List<PetResponseDto> getAll();
+
+  void delete(final long id);
 }

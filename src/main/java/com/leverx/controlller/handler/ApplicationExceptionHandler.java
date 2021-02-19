@@ -1,8 +1,6 @@
-package com.leverx.config;
+package com.leverx.controlller.handler;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 
 import javax.persistence.EntityNotFoundException;
 
@@ -21,9 +19,9 @@ import com.leverx.payload.response.MessageResponse;
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(EntityNotFoundException.class)
-  protected ResponseEntity<?> handleThereIsNoSuchUserException() {
-    return new ResponseEntity<>(
-        new EntityNotFoundException("There is no such entity"), NOT_FOUND);
+  protected ResponseEntity<EntityNotFoundException> handleEntityNotFoundException(
+      final EntityNotFoundException exception) {
+    return new ResponseEntity<>(exception, NOT_FOUND);
   }
 
   @Override
@@ -39,9 +37,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         .getFieldErrors()
         .forEach(fieldError -> stringBuffer.append(fieldError.getDefaultMessage()).append("\n"));
 
-    return new ResponseEntity<>(
-            new MessageResponse(stringBuffer.toString()),
-            new HttpHeaders(),
-            BAD_REQUEST);
+    return ResponseEntity.badRequest()
+        .header(new HttpHeaders().toString())
+        .body(new MessageResponse(stringBuffer.toString()));
   }
 }

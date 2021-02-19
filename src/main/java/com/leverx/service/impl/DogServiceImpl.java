@@ -3,6 +3,7 @@ package com.leverx.service.impl;
 import static com.leverx.dto.converter.DogConverterDto.convertDogEntityToResponse;
 import static com.leverx.dto.converter.DogConverterDto.convertDogRequestToEntity;
 import static com.leverx.dto.converter.DogConverterDto.convertListOfEntityToListOfResponse;
+import static com.leverx.entity.EPetType.DOG;
 
 import java.util.List;
 
@@ -40,7 +41,8 @@ public class DogServiceImpl implements DogService {
     dog.setOwner(
         userRepository
             .findById(dogRequestDto.getOwnerId())
-            .orElseThrow(EntityNotFoundException::new));
+            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+    dog.setPetType(DOG);
 
     return convertDogEntityToResponse(dogRepository.save(dog));
   }
@@ -49,16 +51,17 @@ public class DogServiceImpl implements DogService {
   @Transactional
   public DogResponseDto update(final long dogId, final DogRequestDto dogRequestDto) {
 
-    if (!dogRepository.existsById(dogId)) {
-      throw new EntityNotFoundException("No entity with such id");
-    }
-
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
         userRepository
             .findById(dogRequestDto.getOwnerId())
-            .orElseThrow(EntityNotFoundException::new));
-    dog.setId(dogId);
+            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+    dog.setId(
+        dogRepository
+            .findById(dogId)
+            .orElseThrow(() -> new EntityNotFoundException("There is no such dog"))
+            .getId());
+    dog.setPetType(DOG);
 
     return convertDogEntityToResponse(dogRepository.save(dog));
   }
@@ -67,13 +70,9 @@ public class DogServiceImpl implements DogService {
   @Transactional
   public DogResponseDto findById(final long id) {
     return convertDogEntityToResponse(
-        dogRepository.findById(id).orElseThrow(EntityNotFoundException::new));
-  }
-
-  @Override
-  @Transactional
-  public List<DogResponseDto> getAllByOwnerId(final long ownerId) {
-    return convertListOfEntityToListOfResponse(dogRepository.findAllByOwnerId(ownerId));
+        dogRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("There is no such dog")));
   }
 
   @Override
@@ -85,6 +84,9 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public void delete(final long id) {
+    if (!dogRepository.existsById(id)) {
+      throw new EntityNotFoundException("There is no such dog");
+    }
     dogRepository.deleteById(id);
   }
 }

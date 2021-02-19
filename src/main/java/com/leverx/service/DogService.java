@@ -14,8 +14,6 @@ public interface DogService {
 
   DogResponseDto findById(final long id);
 
-  List<DogResponseDto> getAllByOwnerId(final long ownerId);
-
   List<DogResponseDto> getAll();
 
   void delete(final long id);

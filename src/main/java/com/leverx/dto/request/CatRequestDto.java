@@ -6,7 +6,7 @@ import lombok.Data;
 
 /** @author Andrei Yahorau */
 @Data
-public class CatRequestDto extends PetRequestDto  {
+public class CatRequestDto extends PetRequestDto {
 
   @NotNull
   private boolean isBold;

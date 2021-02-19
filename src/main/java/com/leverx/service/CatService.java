@@ -14,8 +14,6 @@ public interface CatService {
 
   CatResponseDto findById(final long id);
 
-  List<CatResponseDto> getAllByOwnerId(final long ownerId);
-
   List<CatResponseDto> getAll();
 
   void delete(final long id);
