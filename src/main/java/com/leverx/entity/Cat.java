@@ -21,11 +21,12 @@ public class Cat extends Pet {
   @Builder(builderMethodName = "catBuilder")
   public Cat(
       final long id,
+      final EPetType petType,
       final String name,
       final LocalDate birthdate,
       final User owner,
       final boolean isBold) {
-    super(id, name, birthdate, owner);
+    super(id, petType, name, birthdate, owner);
     this.isBold = isBold;
   }
 }

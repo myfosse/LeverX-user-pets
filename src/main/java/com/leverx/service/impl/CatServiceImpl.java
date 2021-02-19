@@ -1,14 +1,17 @@
 package com.leverx.service.impl;
 
 import static com.leverx.dto.converter.CatConverterDto.*;
+import static com.leverx.entity.EPetType.CAT;
+
 
 import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 import com.leverx.dto.request.CatRequestDto;
 import com.leverx.dto.response.CatResponseDto;
 import com.leverx.entity.Cat;
+import com.leverx.exception.CatNotFoundException;
+import com.leverx.exception.UserNotFoundException;
 import com.leverx.repository.CatRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.CatService;
@@ -38,7 +41,8 @@ public class CatServiceImpl implements CatService {
     cat.setOwner(
         userRepository
             .findById(catRequestDto.getOwnerId())
-            .orElseThrow(EntityNotFoundException::new));
+            .orElseThrow(UserNotFoundException::new));
+    cat.setPetType(CAT);
 
     return convertCatEntityToResponse(catRepository.save(cat));
   }
@@ -47,30 +51,22 @@ public class CatServiceImpl implements CatService {
   @Transactional
   public CatResponseDto update(final long catId, final CatRequestDto catRequestDto) {
 
-    if (!catRepository.existsById(catId)) {
-      throw new EntityNotFoundException("No entity with such id");
-    }
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
-            userRepository
-                    .findById(catRequestDto.getOwnerId())
-                    .orElseThrow(EntityNotFoundException::new));
-    cat.setId(catId);
+        userRepository
+            .findById(catRequestDto.getOwnerId())
+            .orElseThrow(UserNotFoundException::new));
+    cat.setId(catRepository.findById(catId).orElseThrow(CatNotFoundException::new).getId());
 
     return convertCatEntityToResponse(catRepository.save(cat));
   }
 
   @Override
   @Transactional
-  public CatResponseDto findById(final long id) {
-    return convertCatEntityToResponse(
-        catRepository.findById(id).orElseThrow(EntityNotFoundException::new));
-  }
-
-  @Override
-  @Transactional
-  public List<CatResponseDto> getAllByOwnerId(final long ownerId) {
-    return convertListOfEntityToListOfResponse(catRepository.findAllByOwnerId(ownerId));
+  public Optional<CatResponseDto> findById(final long id) {
+    return Optional.of(convertCatEntityToResponse(
+        catRepository.findById(id)
+                .orElseThrow(CatNotFoundException::new)));
   }
 
   @Override

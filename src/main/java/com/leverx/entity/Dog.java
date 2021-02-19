@@ -21,11 +21,12 @@ public class Dog extends Pet {
   @Builder(builderMethodName = "dogBuilder")
   public Dog(
       final long id,
+      final EPetType petType,
       final String name,
       final LocalDate birthdate,
       final User owner,
       final boolean isGuideDog) {
-    super(id, name, birthdate, owner);
+    super(id, petType, name, birthdate, owner);
     this.isGuideDog = isGuideDog;
   }
 }

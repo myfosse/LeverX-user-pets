@@ -1,9 +1,6 @@
-package com.leverx.dto.response;
+package com.leverx.dto.response.simple;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import com.leverx.dto.response.simple.SimplePetResponseDto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +8,7 @@ import lombok.Data;
 /** @author Andrei Yahorau */
 @Data
 @Builder
-public class UserResponseDto {
+public class SimpleUserResponseDto {
 
   private long id;
 
@@ -22,6 +19,4 @@ public class UserResponseDto {
   private String email;
 
   private LocalDate birthdate;
-
-  private List<SimplePetResponseDto> pets;
 }

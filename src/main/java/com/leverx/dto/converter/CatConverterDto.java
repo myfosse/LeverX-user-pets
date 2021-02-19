@@ -2,7 +2,7 @@ package com.leverx.dto.converter;
 
 import static java.util.stream.Collectors.toList;
 
-import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToResponse;
+import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToSimpleResponse;
 
 import java.util.List;
 
@@ -24,10 +24,11 @@ public final class CatConverterDto {
   public static CatResponseDto convertCatEntityToResponse(final Cat cat) {
     return CatResponseDto.catResponseBuilder()
             .id(cat.getId())
+            .petType(cat.getPetType())
             .name(cat.getName())
             .birthdate(cat.getBirthdate())
             .isBold(cat.isBold())
-            .owner(convertUserEntityToResponse(cat.getOwner()))
+            .owner(convertUserEntityToSimpleResponse(cat.getOwner()))
             .build();
   }
 

@@ -1,6 +1,7 @@
 package com.leverx.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.UserResponseDto;
@@ -12,7 +13,7 @@ public interface UserService {
 
   UserResponseDto update(final long catId, final UserRequestDto petRequestDto);
 
-  UserResponseDto findById(final long id);
+  Optional<UserResponseDto> findById(final long id);
 
   List<UserResponseDto> getAll();
 

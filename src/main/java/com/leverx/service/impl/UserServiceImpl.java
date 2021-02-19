@@ -4,9 +4,9 @@ import static com.leverx.dto.converter.UserConverterDto.convertListOfEntityToLis
 import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserRequestToEntity;
 
-import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.UserResponseDto;
 import com.leverx.entity.User;
+import com.leverx.exception.UserNotFoundException;
+import com.leverx.repository.PetRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.UserService;
 
@@ -23,10 +25,12 @@ import com.leverx.service.UserService;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final PetRepository petRepository;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(final UserRepository userRepository, final PetRepository petRepository) {
     this.userRepository = userRepository;
+    this.petRepository = petRepository;
   }
 
   @Override
@@ -41,7 +45,7 @@ public class UserServiceImpl implements UserService {
   public UserResponseDto update(final long userId, final UserRequestDto userRequestDto) {
 
     if (!userRepository.existsById(userId)) {
-      throw new EntityNotFoundException("No entity with such id");
+      throw new UserNotFoundException("No entity with such id");
     }
 
     User user = convertUserRequestToEntity(userRequestDto);
@@ -52,9 +56,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public UserResponseDto findById(final long id) {
-    return convertUserEntityToResponse(
-        userRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+  public Optional<UserResponseDto> findById(final long id) {
+    return Optional.of(convertUserEntityToResponse(
+        userRepository.findById(id).orElseThrow(UserNotFoundException::new)));
   }
 
   @Override
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public void delete(final long id) {
+    petRepository.removeAllOwnerIdReference(id);
     userRepository.deleteById(id);
   }
 }
