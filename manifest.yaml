@@ -1,0 +1,9 @@
+applications:
+  - name: user-pets
+    instances: 1
+    memory: 1G
+    disk_quota: 1G
+    path: target/user-pets-0.0.1-SNAPSHOT.jar
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.35
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
