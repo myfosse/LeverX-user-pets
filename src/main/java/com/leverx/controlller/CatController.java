@@ -2,6 +2,7 @@ package com.leverx.controlller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,35 +36,34 @@ public class CatController {
   }
 
   @GetMapping
-  public ResponseEntity<List<CatResponseDto>> getAll() {
+  public ResponseEntity<List<CatResponseDto>> getAllCats() {
     return ResponseEntity.ok(catService.getAll());
   }
 
   @PostMapping
-  public ResponseEntity<CatResponseDto> add(
-      @Valid @RequestBody final CatRequestDto catRequestDto,
-      final HttpServletRequest request) {
+  public ResponseEntity<CatResponseDto> addCat(
+          @Valid @RequestBody final CatRequestDto catRequestDto, final HttpServletRequest request) {
 
     CatResponseDto catResponseDto = catService.save(catRequestDto);
 
     return ResponseEntity.created(
             URI.create(request.getRequestURL().toString() + "/" + catResponseDto.getId()))
-        .body(catResponseDto);
+            .body(catResponseDto);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<CatResponseDto> getById(@PathVariable final long id) {
+  public ResponseEntity<Optional<CatResponseDto>> getCatById(@PathVariable final long id) {
     return ResponseEntity.ok().body(catService.findById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<CatResponseDto> update(
+  public ResponseEntity<CatResponseDto> updateCat(
       @PathVariable final long id, @Valid @RequestBody final CatRequestDto catRequestDto) {
     return ResponseEntity.ok().body(catService.update(id, catRequestDto));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<MessageResponse> delete(@PathVariable final long id) {
+  public ResponseEntity<MessageResponse> deleteCat(@PathVariable final long id) {
     catService.delete(id);
     return ResponseEntity.ok().body(new MessageResponse("Cat deleted"));
   }

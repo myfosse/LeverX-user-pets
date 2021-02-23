@@ -5,9 +5,9 @@ import static com.leverx.dto.converter.DogConverterDto.convertDogRequestToEntity
 import static com.leverx.dto.converter.DogConverterDto.convertListOfEntityToListOfResponse;
 import static com.leverx.entity.EPetType.DOG;
 
-import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.leverx.dto.request.DogRequestDto;
 import com.leverx.dto.response.DogResponseDto;
 import com.leverx.entity.Dog;
+import com.leverx.exception.DogNotFoundException;
+import com.leverx.exception.UserNotFoundException;
 import com.leverx.repository.DogRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.DogService;
@@ -41,7 +43,7 @@ public class DogServiceImpl implements DogService {
     dog.setOwner(
         userRepository
             .findById(dogRequestDto.getOwnerId())
-            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+            .orElseThrow(UserNotFoundException::new));
     dog.setPetType(DOG);
 
     return convertDogEntityToResponse(dogRepository.save(dog));
@@ -55,24 +57,17 @@ public class DogServiceImpl implements DogService {
     dog.setOwner(
         userRepository
             .findById(dogRequestDto.getOwnerId())
-            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
-    dog.setId(
-        dogRepository
-            .findById(dogId)
-            .orElseThrow(() -> new EntityNotFoundException("There is no such dog"))
-            .getId());
-    dog.setPetType(DOG);
+            .orElseThrow(UserNotFoundException::new));
+    dog.setId(dogRepository.findById(dogId).orElseThrow(DogNotFoundException::new).getId());
 
     return convertDogEntityToResponse(dogRepository.save(dog));
   }
 
   @Override
   @Transactional
-  public DogResponseDto findById(final long id) {
-    return convertDogEntityToResponse(
-        dogRepository
-            .findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("There is no such dog")));
+  public Optional<DogResponseDto> findById(final long id) {
+    return Optional.of(convertDogEntityToResponse(
+        dogRepository.findById(id).orElseThrow(DogNotFoundException::new)));
   }
 
   @Override
@@ -84,9 +79,6 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public void delete(final long id) {
-    if (!dogRepository.existsById(id)) {
-      throw new EntityNotFoundException("There is no such dog");
-    }
     dogRepository.deleteById(id);
   }
 }

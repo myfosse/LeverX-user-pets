@@ -1,6 +1,7 @@
 package com.leverx.controlller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +28,17 @@ public class PetController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PetResponseDto>> getAll() {
+  public ResponseEntity<List<PetResponseDto>> getAllPets() {
     return ResponseEntity.ok(petService.getAll());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<PetResponseDto> getById(@PathVariable final long id) {
+  public ResponseEntity<Optional<PetResponseDto>> getPetById(@PathVariable final long id) {
     return ResponseEntity.ok(petService.findById(id));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<MessageResponse> deleteById(@PathVariable final long id) {
+  public ResponseEntity<MessageResponse> deletePetById(@PathVariable final long id) {
     petService.delete(id);
     return ResponseEntity.ok(new MessageResponse("Pet deleted"));
   }

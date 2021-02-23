@@ -2,6 +2,7 @@ package com.leverx.controlller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,12 +36,12 @@ public class DogController {
   }
 
   @GetMapping
-  public ResponseEntity<List<DogResponseDto>> getAll() {
+  public ResponseEntity<List<DogResponseDto>> getAllDogs() {
     return ResponseEntity.ok(dogService.getAll());
   }
 
   @PostMapping
-  public ResponseEntity<DogResponseDto> add(
+  public ResponseEntity<DogResponseDto> addDog(
           @Valid @RequestBody final DogRequestDto dogRequestDto, final HttpServletRequest request) {
 
     DogResponseDto dogResponseDto = dogService.save(dogRequestDto);
@@ -51,18 +52,18 @@ public class DogController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<DogResponseDto> getById(@PathVariable final long id) {
+  public ResponseEntity<Optional<DogResponseDto>> getDogById(@PathVariable final long id) {
     return ResponseEntity.ok(dogService.findById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<DogResponseDto> update(
+  public ResponseEntity<DogResponseDto> updateDog(
       @PathVariable final long id, @Valid @RequestBody final DogRequestDto dogRequestDto) {
     return ResponseEntity.ok(dogService.update(id, dogRequestDto));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<MessageResponse> delete(@PathVariable final long id) {
+  public ResponseEntity<MessageResponse> deleteDog(@PathVariable final long id) {
     dogService.delete(id);
     return ResponseEntity.ok(new MessageResponse("Dog deleted"));
   }

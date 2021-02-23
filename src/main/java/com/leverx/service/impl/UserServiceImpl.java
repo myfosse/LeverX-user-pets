@@ -1,26 +1,21 @@
 package com.leverx.service.impl;
 
-import static java.util.Arrays.stream;
-import static java.util.Objects.nonNull;
-
 import static com.leverx.dto.converter.UserConverterDto.convertListOfEntityToListOfResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserRequestToEntity;
 
-import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.leverx.dto.converter.PetConverterDto;
 import com.leverx.dto.request.UserRequestDto;
-import com.leverx.dto.response.PetResponseDto;
 import com.leverx.dto.response.UserResponseDto;
-import com.leverx.entity.EPetType;
 import com.leverx.entity.User;
+import com.leverx.exception.UserNotFoundException;
 import com.leverx.repository.PetRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.UserService;
@@ -33,9 +28,7 @@ public class UserServiceImpl implements UserService {
   private final PetRepository petRepository;
 
   @Autowired
-  public UserServiceImpl(
-      final UserRepository userRepository,
-      final PetRepository petRepository) {
+  public UserServiceImpl(final UserRepository userRepository, final PetRepository petRepository) {
     this.userRepository = userRepository;
     this.petRepository = petRepository;
   }
@@ -43,10 +36,8 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto save(final UserRequestDto userRequestDto) {
-
-    User user = convertUserRequestToEntity(userRequestDto);
-
-    return convertUserEntityToResponse(userRepository.save(user));
+    return convertUserEntityToResponse(
+            userRepository.save(convertUserRequestToEntity(userRequestDto)));
   }
 
   @Override
@@ -54,7 +45,7 @@ public class UserServiceImpl implements UserService {
   public UserResponseDto update(final long userId, final UserRequestDto userRequestDto) {
 
     if (!userRepository.existsById(userId)) {
-      throw new EntityNotFoundException("No entity with such id");
+      throw new UserNotFoundException("No entity with such id");
     }
 
     User user = convertUserRequestToEntity(userRequestDto);
@@ -65,11 +56,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public UserResponseDto findById(final long id) {
-    return convertUserEntityToResponse(
-        userRepository
-            .findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
+  public Optional<UserResponseDto> findById(final long id) {
+    return Optional.of(convertUserEntityToResponse(
+        userRepository.findById(id).orElseThrow(UserNotFoundException::new)));
   }
 
   @Override
@@ -80,27 +69,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public List<PetResponseDto> getAllPets(final long id, final String petType) {
-
-    if (nonNull(petType)
-        && stream(EPetType.values())
-            .anyMatch(type -> type.toString().equals(petType.toUpperCase()))) {
-      return PetConverterDto.convertListOfEntityToListOfResponse(
-          petRepository.findAllByOwnerIdAndPetType(id, EPetType.valueOf(petType.toUpperCase())));
-    }
-    return PetConverterDto.convertListOfEntityToListOfResponse(
-        userRepository
-            .findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("There is no such user"))
-            .getPets());
-  }
-
-  @Override
-  @Transactional
   public void delete(final long id) {
-    if (!userRepository.existsById(id)) {
-      throw new EntityNotFoundException("There is no such user");
-    }
     petRepository.removeAllOwnerIdReference(id);
     userRepository.deleteById(id);
   }

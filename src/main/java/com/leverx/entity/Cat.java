@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Entity
-@Table(name = "cats")
 @PrimaryKeyJoinColumn(name = "catId")
 @Data
 @NoArgsConstructor
