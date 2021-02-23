@@ -1,7 +1,6 @@
 package com.leverx.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.leverx.dto.request.DogRequestDto;
 import com.leverx.dto.response.DogResponseDto;
@@ -13,7 +12,7 @@ public interface DogService {
 
   DogResponseDto update(final long catId, final DogRequestDto catRequestDto);
 
-  Optional<DogResponseDto> findById(final long id);
+  DogResponseDto findById(final long id);
 
   List<DogResponseDto> getAll();
 
