@@ -1,7 +1,6 @@
 package com.leverx.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.leverx.dto.request.CatRequestDto;
 import com.leverx.dto.response.CatResponseDto;
@@ -13,7 +12,7 @@ public interface CatService {
 
   CatResponseDto update(final long catId, final CatRequestDto catRequestDto);
 
-  Optional<CatResponseDto> findById(final long id);
+  CatResponseDto findById(final long id);
 
   List<CatResponseDto> getAll();
 

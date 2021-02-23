@@ -18,3 +18,10 @@ You can check all available fuctional by using postman [collection](https://gith
 - Maven 3.6.3
 - H2
 - Spring Boot 2.4.2
+
+## How to start application
+
+1. Go to the root of the project
+2. Run next command to build .jar: **mvn clean package**
+3. After successful build sign in at SAP CP: **cf login** (then write your email and password)
+4. After successful log in push project to SAP CP: **cf push**

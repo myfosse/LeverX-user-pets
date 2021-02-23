@@ -1,0 +1,70 @@
+package com.leverx.config.security;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.leverx.service.impl.UserDetailsServiceImpl;
+
+@EnableWebSecurity
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+  private static final String PREFIX = "/api/v1";
+
+  private final UserDetailsServiceImpl userDetailsService;
+
+  @Autowired
+  public SecurityConfig(final UserDetailsServiceImpl userDetailsService) {
+    this.userDetailsService = userDetailsService;
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Override
+  public void configure(final AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
+    authenticationManagerBuilder
+        .inMemoryAuthentication()
+        .withUser("admin")
+        .password(passwordEncoder().encode("adminPassword2021."))
+        .authorities("ROLE_USER");
+    authenticationManagerBuilder
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(passwordEncoder());
+  }
+
+  @Override
+  protected void configure(final HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers(PREFIX + "/auth/sign-up")
+            .anonymous()
+        .antMatchers(
+            PREFIX + "/cats/**",
+                PREFIX + "/dogs/**",
+                PREFIX + "/users/**",
+                PREFIX + "/pets/**")
+            .authenticated()
+        .and()
+            .httpBasic()
+        .and()
+            .logout()
+        .and()
+            .sessionManagement()
+            .sessionCreationPolicy(STATELESS)
+        .and()
+            .csrf()
+            .disable();
+  }
+}

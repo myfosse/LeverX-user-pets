@@ -13,8 +13,6 @@ import com.leverx.entity.Pet;
 /** @author Andrei Yahorau */
 public interface PetRepository extends JpaRepository<Pet, Long> {
 
-  List<Pet> findAllByOwnerId(final long ownerId);
-
   List<Pet> findAllByOwnerIdAndPetType(final long id, final EPetType petType);
 
   @Modifying
