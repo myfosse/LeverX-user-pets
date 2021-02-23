@@ -2,6 +2,8 @@ package com.leverx.dto.response.simple;
 
 import java.time.LocalDate;
 
+import com.leverx.entity.ERole;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,4 +21,6 @@ public class SimpleUserResponseDto {
   private String email;
 
   private LocalDate birthdate;
+
+  private ERole role;
 }

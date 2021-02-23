@@ -7,7 +7,6 @@ import static javax.persistence.InheritanceType.JOINED;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -32,7 +31,6 @@ public abstract class Pet {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  @Column(name = "id", updatable = false, nullable = false)
   private Long id;
 
   @Enumerated(STRING)
