@@ -35,6 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(final AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
+    authenticationManagerBuilder.inMemoryAuthentication()
+        .withUser("admin")
+        .password(passwordEncoder().encode("adminPassword2021."))
+        .authorities("ROLE_USER");
     authenticationManagerBuilder
         .userDetailsService(userDetailsService)
         .passwordEncoder(passwordEncoder());
