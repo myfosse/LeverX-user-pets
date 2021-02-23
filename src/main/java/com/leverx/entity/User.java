@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,8 @@ import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Data
 @Builder
 @NoArgsConstructor
