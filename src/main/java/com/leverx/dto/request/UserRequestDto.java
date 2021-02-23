@@ -21,24 +21,6 @@ public class UserRequestDto {
   @Email private String email;
 
   @NotNull
-  @Pattern(
-      regexp =
-          "(?=.*[0-9])(?=.*[\\.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\.!@#$%^&*]{8," + "256}",
-      message =
-          "Password must contain lowercase and uppercase latin letters, numbers, special "
-              + "symbols and be at least 8 characters")
-  private String password;
-
-  @NotNull
-  @Pattern(
-      regexp =
-          "(?=.*[0-9])(?=.*[\\.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\.!@#$%^&*]{8," + "256}",
-      message =
-          "Password must contain lowercase and uppercase latin letters, numbers, special "
-              + "symbols and be at least 8 characters")
-  private String passwordConfirmation;
-
-  @NotNull
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate birthdate;
 }

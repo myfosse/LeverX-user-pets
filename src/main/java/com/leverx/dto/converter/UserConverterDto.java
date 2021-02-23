@@ -34,7 +34,6 @@ public final class UserConverterDto {
         .lastName(user.getLastName())
         .email(user.getEmail())
         .birthdate(user.getBirthdate())
-        .role(user.getRole())
         .pets(PetConverterDto.convertListOfEntityToListOfSimpleResponse(user.getPets()))
         .build();
   }
@@ -47,7 +46,6 @@ public final class UserConverterDto {
             .firstName(user.getFirstName())
             .lastName(user.getLastName())
             .email(user.getEmail())
-            .role(user.getRole())
             .birthdate(user.getBirthdate())
             .build();
   }

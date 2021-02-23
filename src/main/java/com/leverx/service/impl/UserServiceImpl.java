@@ -6,15 +6,12 @@ import static java.util.Objects.nonNull;
 import static com.leverx.dto.converter.UserConverterDto.convertListOfEntityToListOfResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserRequestToEntity;
-import static com.leverx.entity.ERole.ROLE_USER;
-import static com.leverx.validator.UserValidator.validateUserRequest;
 
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,28 +31,20 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final PetRepository petRepository;
-  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public UserServiceImpl(
       final UserRepository userRepository,
-      final PetRepository petRepository,
-      final PasswordEncoder passwordEncoder) {
+      final PetRepository petRepository) {
     this.userRepository = userRepository;
     this.petRepository = petRepository;
-    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
   @Transactional
   public UserResponseDto save(final UserRequestDto userRequestDto) {
 
-    validateUserRequest(userRequestDto, userRepository);
-
     User user = convertUserRequestToEntity(userRequestDto);
-    String password = passwordEncoder.encode(userRequestDto.getPassword());
-    user.setPassword(password);
-    user.setRole(ROLE_USER);
 
     return convertUserEntityToResponse(userRepository.save(user));
   }
@@ -68,13 +57,8 @@ public class UserServiceImpl implements UserService {
       throw new EntityNotFoundException("No entity with such id");
     }
 
-    validateUserRequest(userRequestDto, userRepository);
-
     User user = convertUserRequestToEntity(userRequestDto);
-    String password = passwordEncoder.encode(userRequestDto.getPassword());
     user.setId(userId);
-    user.setPassword(password);
-    user.setRole(ROLE_USER);
 
     return convertUserEntityToResponse(userRepository.save(user));
   }

@@ -1,13 +1,11 @@
 package com.leverx.entity;
 
-import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -41,11 +39,6 @@ public class User {
 
   private LocalDate birthdate;
 
-  private String password;
-
   @OneToMany(mappedBy = "owner")
   private List<Pet> pets;
-
-  @Enumerated(value = STRING)
-  private ERole role;
 }
