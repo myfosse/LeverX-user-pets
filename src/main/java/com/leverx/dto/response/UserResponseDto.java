@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.leverx.dto.response.simple.SimplePetResponseDto;
+import com.leverx.entity.ERole;
 
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +25,6 @@ public class UserResponseDto {
   private LocalDate birthdate;
 
   private List<SimplePetResponseDto> pets;
+
+  private ERole role;
 }

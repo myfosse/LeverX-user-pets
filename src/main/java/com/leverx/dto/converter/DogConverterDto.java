@@ -4,13 +4,18 @@ import static java.util.stream.Collectors.toList;
 
 import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToSimpleResponse;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import java.util.List;
 
 import com.leverx.dto.request.DogRequestDto;
 import com.leverx.dto.response.DogResponseDto;
 import com.leverx.entity.Dog;
 
+import lombok.NoArgsConstructor;
+
 /** @author Andrei Yahorau */
+@NoArgsConstructor(access = PRIVATE)
 public final class DogConverterDto {
 
   public static Dog convertDogRequestToEntity(final DogRequestDto dogRequestDto) {
