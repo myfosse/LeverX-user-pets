@@ -28,8 +28,11 @@ import com.leverx.repository.PetRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
@@ -49,6 +52,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto save(final UserRequestDto userRequestDto) {
+    log.info("Save user to database: {}", userRequestDto);
 
     validateUserRequest(userRequestDto, userRepository);
 
@@ -63,6 +67,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto update(final long userId, final UserRequestDto userRequestDto) {
+    log.info("Update user {} in database by id: {}", userRequestDto, userId);
 
     if (!userRepository.existsById(userId)) {
       throw new EntityNotFoundException("No entity with such id");
@@ -82,6 +87,8 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto findById(final long id) {
+    log.info("Find user in database by id: {}", id);
+
     return convertUserEntityToResponse(
         userRepository
             .findById(id)
@@ -91,12 +98,15 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public List<UserResponseDto> getAll() {
+    log.info("Get all users from database");
+
     return convertListOfEntityToListOfResponse(userRepository.findAll());
   }
 
   @Override
   @Transactional
   public List<PetResponseDto> getAllPets(final long id, final String petType) {
+    log.info("Get all user pets from database by pet type: {}", petType);
 
     if (nonNull(petType)
         && stream(EPetType.values())
@@ -114,7 +124,11 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public void delete(final long id) {
+    log.info("Delete user from database by id: {}", id);
+
     if (!userRepository.existsById(id)) {
+      log.error("No user in database with id: {}", id);
+
       throw new EntityNotFoundException("There is no such user");
     }
     petRepository.removeAllOwnerIdReference(id);

@@ -15,8 +15,11 @@ import com.leverx.dto.response.PetResponseDto;
 import com.leverx.repository.PetRepository;
 import com.leverx.service.PetService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @Service
+@Slf4j
 public class PetServiceImpl implements PetService {
 
   private final PetRepository petRepository;
@@ -29,6 +32,8 @@ public class PetServiceImpl implements PetService {
   @Override
   @Transactional
   public PetResponseDto findById(final long id) {
+    log.info("Find pet in database by id: {}", id);
+
     return convertPetEntityToResponse(
         petRepository
             .findById(id)
@@ -38,13 +43,19 @@ public class PetServiceImpl implements PetService {
   @Override
   @Transactional
   public List<PetResponseDto> getAll() {
+    log.info("Get all pets from database");
+
     return convertListOfEntityToListOfResponse(petRepository.findAll());
   }
 
   @Override
   @Transactional
   public void delete(final long id) {
+    log.info("Delete pet from database by id: {}", id);
+
     if (!petRepository.existsById(id)) {
+      log.error("No pet in database with id: {}", id);
+
       throw new EntityNotFoundException("There is no such pet");
     }
     petRepository.deleteById(id);

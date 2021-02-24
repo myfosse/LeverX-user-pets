@@ -20,8 +20,11 @@ import com.leverx.repository.DogRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.DogService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @Service
+@Slf4j
 public class DogServiceImpl implements DogService {
 
   private final DogRepository dogRepository;
@@ -36,6 +39,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto save(final DogRequestDto dogRequestDto) {
+    log.info("Save dog to database: {}", dogRequestDto);
 
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
@@ -50,6 +54,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto update(final long dogId, final DogRequestDto dogRequestDto) {
+    log.info("Update dog {} in database by id: {}", dogRequestDto, dogId);
 
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
@@ -69,6 +74,8 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto findById(final long id) {
+    log.info("Find dog in database by id: {}", id);
+
     return convertDogEntityToResponse(
         dogRepository
             .findById(id)
@@ -78,13 +85,19 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public List<DogResponseDto> getAll() {
+    log.info("Get all dogs from database");
+
     return convertListOfEntityToListOfResponse(dogRepository.findAll());
   }
 
   @Override
   @Transactional
   public void delete(final long id) {
+    log.info("Delete dog from database by id: {}", id);
+
     if (!dogRepository.existsById(id)) {
+      log.error("No dog in database with id: {}", id);
+
       throw new EntityNotFoundException("There is no such dog");
     }
     dogRepository.deleteById(id);
