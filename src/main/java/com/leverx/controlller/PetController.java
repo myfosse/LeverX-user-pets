@@ -14,9 +14,12 @@ import com.leverx.dto.response.PetResponseDto;
 import com.leverx.payload.response.MessageResponse;
 import com.leverx.service.PetService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @RestController
 @RequestMapping("/api/v1/pets")
+@Slf4j
 public class PetController {
 
   private final PetService petService;
@@ -28,16 +31,22 @@ public class PetController {
 
   @GetMapping
   public ResponseEntity<List<PetResponseDto>> getAll() {
+    log.info("Get all pets request");
+
     return ResponseEntity.ok(petService.getAll());
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<PetResponseDto> getById(@PathVariable final long id) {
+    log.info("Get pet by id request: {}", id);
+
     return ResponseEntity.ok(petService.findById(id));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<MessageResponse> deleteById(@PathVariable final long id) {
+    log.info("Delete pet by id request: {}", id);
+
     petService.delete(id);
     return ResponseEntity.ok(new MessageResponse("Pet deleted"));
   }

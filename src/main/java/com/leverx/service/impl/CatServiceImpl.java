@@ -18,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @Service
+@Slf4j
 public class CatServiceImpl implements CatService {
 
   private final CatRepository catRepository;
@@ -34,6 +37,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto save(final CatRequestDto catRequestDto) {
+    log.info("Save cat to database: {}", catRequestDto);
 
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
@@ -48,6 +52,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto update(final long catId, final CatRequestDto catRequestDto) {
+    log.info("Update cat {} in database by id: {}", catRequestDto, catId);
 
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
@@ -67,6 +72,8 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto findById(final long id) {
+    log.info("Find cat in database by id: {}", id);
+
     return convertCatEntityToResponse(
         catRepository
             .findById(id)
@@ -76,13 +83,19 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public List<CatResponseDto> getAll() {
+    log.info("Get all cats from database");
+
     return convertListOfEntityToListOfResponse(catRepository.findAll());
   }
 
   @Override
   @Transactional
   public void delete(final long id) {
+    log.info("Delete cat from database by id: {}", id);
+
     if (!catRepository.existsById(id)) {
+      log.error("No cat in database with id: {}", id);
+
       throw new EntityNotFoundException("There is no such dog");
     }
     catRepository.deleteById(id);

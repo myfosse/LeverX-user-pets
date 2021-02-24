@@ -16,9 +16,12 @@ import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.UserResponseDto;
 import com.leverx.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrei Yahorau */
 @RestController
 @RequestMapping("/api/v1/auth")
+@Slf4j
 public class AuthController {
 
   private final UserService userService;
@@ -31,6 +34,7 @@ public class AuthController {
   @PostMapping("/sign-up")
   public ResponseEntity<?> signUp(
       @Valid @RequestBody final UserRequestDto userRequestDto, final HttpServletRequest request) {
+    log.info("Sign up request: {}", userRequestDto);
 
     UserResponseDto userResponseDto = userService.save(userRequestDto);
     String createdUserLink =

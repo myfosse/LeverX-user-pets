@@ -11,8 +11,11 @@ import com.leverx.entity.User;
 import com.leverx.model.UserDetailsImpl;
 import com.leverx.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 /** @author Andrey Egorov */
 @Service
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private final UserRepository userRepository;
@@ -25,6 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
+    log.info("Load user from database by email: {}", email);
 
     User user =
             userRepository
