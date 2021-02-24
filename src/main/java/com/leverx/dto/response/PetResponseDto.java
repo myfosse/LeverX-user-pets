@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 import com.leverx.dto.response.simple.SimpleUserResponseDto;
-import com.leverx.entity.EPetType;
+import com.leverx.model.entity.EPetType;
 
 /** @author Andrei Yahorau */
 @Data
-@Builder
+@Builder(builderMethodName = "petResponseBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 public class PetResponseDto {

@@ -3,6 +3,8 @@ package com.leverx.dto.converter;
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 
+import static com.leverx.dto.converter.PetConverterDto.convertPetListOfEntityToListOfSimpleResponse;
+
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.simple.SimpleUserResponseDto;
 import com.leverx.dto.response.UserResponseDto;
-import com.leverx.entity.User;
+import com.leverx.model.entity.User;
 
 import lombok.NoArgsConstructor;
 
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 public final class UserConverterDto {
 
   public static User convertUserRequestToEntity(final UserRequestDto userRequestDto) {
-    return User.builder()
+    return User.userBuilder()
         .firstName(userRequestDto.getFirstName())
         .lastName(userRequestDto.getLastName())
         .email(userRequestDto.getEmail())
@@ -28,21 +30,21 @@ public final class UserConverterDto {
   }
 
   public static UserResponseDto convertUserEntityToResponse(final User user) {
-    return UserResponseDto.builder()
+    return UserResponseDto.userResponseBuilder()
         .id(user.getId())
         .firstName(user.getFirstName())
         .lastName(user.getLastName())
         .email(user.getEmail())
         .birthdate(user.getBirthdate())
         .role(user.getRole())
-        .pets(PetConverterDto.convertListOfEntityToListOfSimpleResponse(user.getPets()))
+        .pets(convertPetListOfEntityToListOfSimpleResponse(user.getPets()))
         .build();
   }
 
   public static SimpleUserResponseDto convertUserEntityToSimpleResponse(final User user) {
     return isNull(user)
         ? null
-        : SimpleUserResponseDto.builder()
+        : SimpleUserResponseDto.simpleUserResponseBuilder()
             .id(user.getId())
             .firstName(user.getFirstName())
             .lastName(user.getLastName())
@@ -52,10 +54,10 @@ public final class UserConverterDto {
             .build();
   }
 
-  public static List<UserResponseDto> convertListOfEntityToListOfResponse(
+  public static List<UserResponseDto> convertUserListOfEntityToListOfResponse(
       final List<User> userList) {
     return userList.stream()
-            .map(UserConverterDto::convertUserEntityToResponse)
-            .collect(toList());
+        .map(UserConverterDto::convertUserEntityToResponse)
+        .collect(toList());
   }
 }

@@ -1,4 +1,4 @@
-package com.leverx.entity;
+package com.leverx.model.entity;
 
 public enum ERole {
   ROLE_USER

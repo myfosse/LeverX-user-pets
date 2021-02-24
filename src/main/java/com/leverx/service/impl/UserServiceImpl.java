@@ -3,11 +3,10 @@ package com.leverx.service.impl;
 import static java.util.Arrays.stream;
 import static java.util.Objects.nonNull;
 
-import static com.leverx.dto.converter.UserConverterDto.convertListOfEntityToListOfResponse;
+import static com.leverx.dto.converter.UserConverterDto.convertUserListOfEntityToListOfResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserEntityToResponse;
 import static com.leverx.dto.converter.UserConverterDto.convertUserRequestToEntity;
-import static com.leverx.entity.ERole.ROLE_USER;
-import static com.leverx.validator.UserValidator.validateUserRequest;
+import static com.leverx.model.entity.ERole.ROLE_USER;
 
 import java.util.List;
 
@@ -22,11 +21,12 @@ import com.leverx.dto.converter.PetConverterDto;
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.dto.response.PetResponseDto;
 import com.leverx.dto.response.UserResponseDto;
-import com.leverx.entity.EPetType;
-import com.leverx.entity.User;
+import com.leverx.model.entity.EPetType;
+import com.leverx.model.entity.User;
 import com.leverx.repository.PetRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.UserService;
+import com.leverx.validator.UserValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,16 +37,19 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final PetRepository petRepository;
+  private final UserValidator userValidator;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public UserServiceImpl(
       final UserRepository userRepository,
       final PetRepository petRepository,
+      final UserValidator userValidator,
       final PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.petRepository = petRepository;
     this.passwordEncoder = passwordEncoder;
+    this.userValidator = userValidator;
   }
 
   @Override
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
   public UserResponseDto save(final UserRequestDto userRequestDto) {
     log.info("Save user to database: {}", userRequestDto);
 
-    validateUserRequest(userRequestDto, userRepository);
+    userValidator.validateUserRequest(userRequestDto);
 
     User user = convertUserRequestToEntity(userRequestDto);
     String password = passwordEncoder.encode(userRequestDto.getPassword());
@@ -73,7 +76,7 @@ public class UserServiceImpl implements UserService {
       throw new EntityNotFoundException("No entity with such id");
     }
 
-    validateUserRequest(userRequestDto, userRepository);
+    userValidator.validateUserRequest(userRequestDto);
 
     User user = convertUserRequestToEntity(userRequestDto);
     String password = passwordEncoder.encode(userRequestDto.getPassword());
@@ -100,7 +103,7 @@ public class UserServiceImpl implements UserService {
   public List<UserResponseDto> getAll() {
     log.info("Get all users from database");
 
-    return convertListOfEntityToListOfResponse(userRepository.findAll());
+    return convertUserListOfEntityToListOfResponse(userRepository.findAll());
   }
 
   @Override
@@ -111,10 +114,10 @@ public class UserServiceImpl implements UserService {
     if (nonNull(petType)
         && stream(EPetType.values())
             .anyMatch(type -> type.toString().equals(petType.toUpperCase()))) {
-      return PetConverterDto.convertListOfEntityToListOfResponse(
+      return PetConverterDto.convertPetListOfEntityToListOfResponse(
           petRepository.findAllByOwnerIdAndPetType(id, EPetType.valueOf(petType.toUpperCase())));
     }
-    return PetConverterDto.convertListOfEntityToListOfResponse(
+    return PetConverterDto.convertPetListOfEntityToListOfResponse(
         userRepository
             .findById(id)
             .orElseThrow(() -> new EntityNotFoundException("There is no such user"))

@@ -2,6 +2,12 @@ package com.leverx.config.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_CATS;
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_DOGS;
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_PETS;
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_USERS;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +23,6 @@ import com.leverx.service.impl.UserDetailsServiceImpl;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-  private static final String PREFIX = "/api/v1";
 
   private final UserDetailsServiceImpl userDetailsService;
 
@@ -48,13 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers(PREFIX + "/auth/sign-up")
+        .antMatchers(ENDPOINT_AUTH)
             .anonymous()
         .antMatchers(
-            PREFIX + "/cats/**",
-                PREFIX + "/dogs/**",
-                PREFIX + "/users/**",
-                PREFIX + "/pets/**")
+            ENDPOINT_CATS,
+            ENDPOINT_DOGS,
+            ENDPOINT_PETS,
+            ENDPOINT_USERS)
             .authenticated()
         .and()
             .httpBasic()
