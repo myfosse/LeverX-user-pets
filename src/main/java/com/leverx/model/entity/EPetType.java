@@ -1,4 +1,4 @@
-package com.leverx.entity;
+package com.leverx.model.entity;
 
 /** @author Andrei Yahorau */
 public enum EPetType {
