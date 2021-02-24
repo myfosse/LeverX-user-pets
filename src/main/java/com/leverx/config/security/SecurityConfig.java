@@ -1,5 +1,10 @@
 package com.leverx.config.security;
 
+
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
@@ -43,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .inMemoryAuthentication()
         .withUser("admin")
         .password(passwordEncoder().encode("adminPassword2021."))
-        .authorities("ROLE_USER");
+        .authorities("ROLE_USER", "ROLE_ADMIN");
     authenticationManagerBuilder
         .userDetailsService(userDetailsService)
         .passwordEncoder(passwordEncoder());
@@ -54,12 +59,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers(ENDPOINT_AUTH)
             .anonymous()
+        .antMatchers(GET,
+            ENDPOINT_CATS + "/**",
+            ENDPOINT_DOGS + "/**",
+            ENDPOINT_PETS + "/**",
+            ENDPOINT_USERS+ "/**")
+            .permitAll()
+        .antMatchers(POST,
+            ENDPOINT_CATS + "/**",
+            ENDPOINT_DOGS + "/**",
+            ENDPOINT_PETS + "/**")
+        .hasAuthority("ROLE_USER")
+        .antMatchers(PUT,
+            ENDPOINT_CATS + "/**",
+            ENDPOINT_DOGS + "/**",
+            ENDPOINT_PETS + "/**")
+        .hasAuthority("ROLE_USER")
+        .antMatchers(DELETE,
+            ENDPOINT_CATS + "/**",
+            ENDPOINT_DOGS + "/**",
+            ENDPOINT_PETS + "/**")
+        .hasAuthority("ROLE_USER")
         .antMatchers(
-            ENDPOINT_CATS,
-            ENDPOINT_DOGS,
-            ENDPOINT_PETS,
-            ENDPOINT_USERS)
-            .authenticated()
+            POST,
+            ENDPOINT_USERS + "/**")
+            .hasAuthority("ROLE_ADMIN")
+        .antMatchers(
+            PUT,
+            ENDPOINT_USERS + "/**")
+        .hasAuthority("ROLE_ADMIN")
+        .antMatchers(
+            DELETE,
+            ENDPOINT_USERS + "/**")
+        .hasAuthority("ROLE_ADMIN")
         .and()
             .httpBasic()
         .and()
