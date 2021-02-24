@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.leverx.dto.response.simple.SimplePetResponseDto;
-import com.leverx.entity.ERole;
+import com.leverx.model.entity.ERole;
 
 import lombok.Builder;
 import lombok.Data;
 
 /** @author Andrei Yahorau */
 @Data
-@Builder
+@Builder(builderMethodName = "userResponseBuilder")
 public class UserResponseDto {
 
   private long id;

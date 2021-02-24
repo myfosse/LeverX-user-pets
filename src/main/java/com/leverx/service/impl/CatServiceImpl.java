@@ -1,7 +1,7 @@
 package com.leverx.service.impl;
 
 import static com.leverx.dto.converter.CatConverterDto.*;
-import static com.leverx.entity.EPetType.CAT;
+import static com.leverx.model.entity.EPetType.CAT;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import javax.persistence.EntityNotFoundException;
 
 import com.leverx.dto.request.CatRequestDto;
 import com.leverx.dto.response.CatResponseDto;
-import com.leverx.entity.Cat;
+import com.leverx.model.entity.Cat;
 import com.leverx.repository.CatRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.CatService;
@@ -85,7 +85,7 @@ public class CatServiceImpl implements CatService {
   public List<CatResponseDto> getAll() {
     log.info("Get all cats from database");
 
-    return convertListOfEntityToListOfResponse(catRepository.findAll());
+    return convertCatListOfEntityToListOfResponse(catRepository.findAll());
   }
 
   @Override

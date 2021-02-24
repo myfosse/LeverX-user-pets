@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.leverx.dto.request.DogRequestDto;
 import com.leverx.dto.response.DogResponseDto;
-import com.leverx.entity.Dog;
+import com.leverx.model.entity.Dog;
 
 import lombok.NoArgsConstructor;
 
@@ -37,9 +37,9 @@ public final class DogConverterDto {
         .build();
   }
 
-  public static List<DogResponseDto> convertListOfEntityToListOfResponse(final List<Dog> dogList) {
+  public static List<DogResponseDto> convertDogListOfEntityToListOfResponse(final List<Dog> dogList) {
     return dogList.stream()
-            .map(DogConverterDto::convertDogEntityToResponse)
-            .collect(toList());
+        .map(DogConverterDto::convertDogEntityToResponse)
+        .collect(toList());
   }
 }

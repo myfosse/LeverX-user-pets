@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.leverx.entity.EPetType;
-import com.leverx.entity.Pet;
+import com.leverx.model.entity.EPetType;
+import com.leverx.model.entity.Pet;
 
 /** @author Andrei Yahorau */
 public interface PetRepository extends JpaRepository<Pet, Long> {

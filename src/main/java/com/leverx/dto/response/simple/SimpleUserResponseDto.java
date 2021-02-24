@@ -2,14 +2,14 @@ package com.leverx.dto.response.simple;
 
 import java.time.LocalDate;
 
-import com.leverx.entity.ERole;
+import com.leverx.model.entity.ERole;
 
 import lombok.Builder;
 import lombok.Data;
 
 /** @author Andrei Yahorau */
 @Data
-@Builder
+@Builder(builderMethodName = "simpleUserResponseBuilder")
 public class SimpleUserResponseDto {
 
   private long id;

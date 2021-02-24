@@ -1,5 +1,7 @@
 package com.leverx.controlller;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_USERS;
+
 import java.net.URI;
 import java.util.List;
 
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(ENDPOINT_USERS)
 @Slf4j
 public class UserController {
 

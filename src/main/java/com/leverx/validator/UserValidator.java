@@ -1,20 +1,23 @@
 package com.leverx.validator;
 
-import static lombok.AccessLevel.PRIVATE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.leverx.dto.request.UserRequestDto;
 import com.leverx.repository.UserRepository;
 
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 /** @author Andrei Yahorau */
-@NoArgsConstructor(access = PRIVATE)
-@Slf4j
-public final class UserValidator {
+@Component
+public class UserValidator {
 
-  public static void validateUserRequest(
-      final UserRequestDto userRequestDto, final UserRepository userRepository) {
+  private final UserRepository userRepository;
+
+  @Autowired
+  public UserValidator(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public void validateUserRequest(final UserRequestDto userRequestDto) {
 
     if (userRepository.existsByEmail(userRequestDto.getEmail())) {
       throw new IllegalArgumentException("Current email already taken");

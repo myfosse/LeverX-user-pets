@@ -1,51 +1,46 @@
-package com.leverx.entity;
+package com.leverx.model.entity;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.InheritanceType.JOINED;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(name = "pets")
+@Inheritance(strategy = JOINED)
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public abstract class Pet {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
 
-  private String firstName;
+  @Enumerated(STRING)
+  private EPetType petType;
 
-  private String lastName;
-
-  private String email;
+  private String name;
 
   private LocalDate birthdate;
 
-  private String password;
-
-  @OneToMany(mappedBy = "owner")
-  private List<Pet> pets;
-
-  @Enumerated(value = STRING)
-  private ERole role;
+  @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "owner_id")
+  private User owner;
 }
