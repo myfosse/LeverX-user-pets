@@ -2,8 +2,8 @@ package com.leverx.service.impl;
 
 import static com.leverx.dto.converter.DogConverterDto.convertDogEntityToResponse;
 import static com.leverx.dto.converter.DogConverterDto.convertDogRequestToEntity;
-import static com.leverx.dto.converter.DogConverterDto.convertListOfEntityToListOfResponse;
-import static com.leverx.entity.EPetType.DOG;
+import static com.leverx.dto.converter.DogConverterDto.convertDogListOfEntityToListOfResponse;
+import static com.leverx.model.entity.EPetType.DOG;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.leverx.dto.request.DogRequestDto;
 import com.leverx.dto.response.DogResponseDto;
-import com.leverx.entity.Dog;
+import com.leverx.model.entity.Dog;
 import com.leverx.repository.DogRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.DogService;
@@ -87,7 +87,7 @@ public class DogServiceImpl implements DogService {
   public List<DogResponseDto> getAll() {
     log.info("Get all dogs from database");
 
-    return convertListOfEntityToListOfResponse(dogRepository.findAll());
+    return convertDogListOfEntityToListOfResponse(dogRepository.findAll());
   }
 
   @Override

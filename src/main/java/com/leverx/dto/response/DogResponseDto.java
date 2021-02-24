@@ -3,7 +3,7 @@ package com.leverx.dto.response;
 import java.time.LocalDate;
 
 import com.leverx.dto.response.simple.SimpleUserResponseDto;
-import com.leverx.entity.EPetType;
+import com.leverx.model.entity.EPetType;
 
 import lombok.Builder;
 import lombok.Data;

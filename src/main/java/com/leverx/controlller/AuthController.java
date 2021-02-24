@@ -1,5 +1,7 @@
 package com.leverx.controlller;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
+
 import java.net.URI;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(ENDPOINT_AUTH)
 @Slf4j
 public class AuthController {
 
@@ -31,8 +33,8 @@ public class AuthController {
     this.userService = userService;
   }
 
-  @PostMapping("/sign-up")
-  public ResponseEntity<?> signUp(
+  @PostMapping("sign-up")
+  public ResponseEntity<UserResponseDto> signUp(
       @Valid @RequestBody final UserRequestDto userRequestDto, final HttpServletRequest request) {
     log.info("Sign up request: {}", userRequestDto);
 

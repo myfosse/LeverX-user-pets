@@ -1,7 +1,7 @@
 package com.leverx.service.impl;
 
 import static com.leverx.dto.converter.PetConverterDto.convertPetEntityToResponse;
-import static com.leverx.dto.converter.PetConverterDto.convertListOfEntityToListOfResponse;
+import static com.leverx.dto.converter.PetConverterDto.convertPetListOfEntityToListOfResponse;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class PetServiceImpl implements PetService {
   public List<PetResponseDto> getAll() {
     log.info("Get all pets from database");
 
-    return convertListOfEntityToListOfResponse(petRepository.findAll());
+    return convertPetListOfEntityToListOfResponse(petRepository.findAll());
   }
 
   @Override

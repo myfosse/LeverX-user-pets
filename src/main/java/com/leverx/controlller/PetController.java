@@ -1,5 +1,7 @@
 package com.leverx.controlller;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_PETS;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/pets")
+@RequestMapping(ENDPOINT_PETS)
 @Slf4j
 public class PetController {
 

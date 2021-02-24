@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.leverx.dto.request.CatRequestDto;
 import com.leverx.dto.response.CatResponseDto;
-import com.leverx.entity.Cat;
+import com.leverx.model.entity.Cat;
 
 import lombok.NoArgsConstructor;
 
@@ -37,9 +37,9 @@ public final class CatConverterDto {
         .build();
   }
 
-  public static List<CatResponseDto> convertListOfEntityToListOfResponse(final List<Cat> catList) {
+  public static List<CatResponseDto> convertCatListOfEntityToListOfResponse(final List<Cat> catList) {
     return catList.stream()
-            .map(CatConverterDto::convertCatEntityToResponse)
-            .collect(toList());
+        .map(CatConverterDto::convertCatEntityToResponse)
+        .collect(toList());
   }
 }

@@ -1,5 +1,7 @@
 package com.leverx.controlller;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_DOGS;
+
 import java.net.URI;
 import java.util.List;
 
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/dogs")
+@RequestMapping(ENDPOINT_DOGS)
 @Slf4j
 public class DogController {
 

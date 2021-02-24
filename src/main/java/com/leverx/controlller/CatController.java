@@ -1,5 +1,7 @@
 package com.leverx.controlller;
 
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_CATS;
+
 import java.net.URI;
 import java.util.List;
 
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/cats")
+@RequestMapping(ENDPOINT_CATS)
 @Slf4j
 public class CatController {
 
