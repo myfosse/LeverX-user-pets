@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ENDPOINT_DOGS + "/**",
             ENDPOINT_PETS + "/**",
             ENDPOINT_USERS+ "/**")
-            .hasAuthority("ROLE_USER")
+            .permitAll()
         .antMatchers(POST,
             ENDPOINT_CATS + "/**",
             ENDPOINT_DOGS + "/**",
