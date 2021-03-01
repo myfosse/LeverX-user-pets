@@ -44,7 +44,7 @@ public class DogServiceImpl implements DogService {
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
         userRepository
-            .findById(dogRequestDto.getOwnerId())
+            .findByEmail(dogRequestDto.getOwnerEmail())
             .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
     dog.setPetType(DOG);
 
@@ -59,7 +59,7 @@ public class DogServiceImpl implements DogService {
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
         userRepository
-            .findById(dogRequestDto.getOwnerId())
+            .findByEmail(dogRequestDto.getOwnerEmail())
             .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
     dog.setId(
         dogRepository
