@@ -42,7 +42,7 @@ public class CatServiceImpl implements CatService {
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
         userRepository
-            .findByEmail(catRequestDto.getOwnerEmail())
+            .findById(catRequestDto.getOwnerId())
             .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
     cat.setPetType(CAT);
 
@@ -57,7 +57,7 @@ public class CatServiceImpl implements CatService {
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
         userRepository
-            .findByEmail(catRequestDto.getOwnerEmail())
+            .findById(catRequestDto.getOwnerId())
             .orElseThrow(() -> new EntityNotFoundException("There is no such user")));
     cat.setId(
         catRepository
