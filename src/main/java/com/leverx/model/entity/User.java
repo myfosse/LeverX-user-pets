@@ -1,9 +1,10 @@
 package com.leverx.model.entity;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,8 +18,8 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,8 +28,9 @@ import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(
+    name = "users",
+    uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Data
 @Builder(builderMethodName = "userBuilder")
 @NoArgsConstructor
@@ -46,13 +48,13 @@ public class User {
   private String email;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  @JsonDeserialize(using = LocalDateDeserializer.class)
-  @JsonSerialize(using = LocalDateSerializer.class)
-  private LocalDate birthdate;
+  @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
+  @JsonSerialize(using = DateSerializer.class)
+  private Date birthdate;
 
   private String password;
 
-  @OneToMany(mappedBy = "owner")
+  @OneToMany(mappedBy = "owner", fetch = LAZY)
   private List<Pet> pets;
 
   @Enumerated(value = STRING)

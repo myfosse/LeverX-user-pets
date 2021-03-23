@@ -22,7 +22,7 @@ public final class DogConverterDto {
     return Dog.dogBuilder()
         .name(dogRequestDto.getName())
         .birthdate(dogRequestDto.getBirthdate())
-        .isGuideDog(dogRequestDto.isGuideDog())
+        .guideDog(dogRequestDto.isGuideDog())
         .build();
   }
 
@@ -32,7 +32,7 @@ public final class DogConverterDto {
         .petType(dog.getPetType())
         .name(dog.getName())
         .birthdate(dog.getBirthdate())
-        .isGuideDog(dog.isGuideDog())
+        .guideDog(dog.isGuideDog())
         .owner(convertUserEntityToSimpleResponse(dog.getOwner()))
         .build();
   }

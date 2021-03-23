@@ -15,4 +15,6 @@ public final class ControllerConstant {
   public static final String ENDPOINT_DOGS  = PREFIX + "/dogs";
   public static final String ENDPOINT_PETS  = PREFIX + "/pets";
   public static final String ENDPOINT_USERS = PREFIX + "/users";
+
+  public static final String ENDPOINT_ODATA = PREFIX + "/odata";
 }

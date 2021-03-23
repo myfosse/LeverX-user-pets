@@ -9,5 +9,5 @@ import lombok.Data;
 public class CatRequestDto extends PetRequestDto {
 
   @NotNull
-  private boolean isBold;
+  private boolean bold;
 }

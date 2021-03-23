@@ -9,5 +9,5 @@ import lombok.Data;
 public class DogRequestDto extends PetRequestDto {
 
   @NotNull
-  private boolean isGuideDog;
+  private boolean guideDog;
 }

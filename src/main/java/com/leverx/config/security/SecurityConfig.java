@@ -1,6 +1,5 @@
 package com.leverx.config.security;
 
-
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -10,6 +9,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_CATS;
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_DOGS;
+import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_ODATA;
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_PETS;
 import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_USERS;
 
@@ -63,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ENDPOINT_CATS + "/**",
             ENDPOINT_DOGS + "/**",
             ENDPOINT_PETS + "/**",
-            ENDPOINT_USERS+ "/**")
+            ENDPOINT_USERS+ "/**",
+            ENDPOINT_ODATA + "/**")
             .hasAuthority("ROLE_USER")
         .antMatchers(POST,
             ENDPOINT_CATS + "/**",

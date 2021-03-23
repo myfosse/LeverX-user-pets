@@ -1,6 +1,6 @@
 package com.leverx.model.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Dog extends Pet {
 
-  private boolean isGuideDog;
+  private boolean guideDog;
 
   @Builder(builderMethodName = "dogBuilder")
   public Dog(
       final long id,
       final EPetType petType,
       final String name,
-      final LocalDate birthdate,
+      final Date birthdate,
       final User owner,
-      final boolean isGuideDog) {
+      final boolean guideDog) {
     super(id, petType, name, birthdate, owner);
-    this.isGuideDog = isGuideDog;
+    this.guideDog = guideDog;
   }
 }

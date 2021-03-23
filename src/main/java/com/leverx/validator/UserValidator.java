@@ -13,7 +13,7 @@ public class UserValidator {
   private final UserRepository userRepository;
 
   @Autowired
-  public UserValidator(UserRepository userRepository) {
+  public UserValidator(final UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 

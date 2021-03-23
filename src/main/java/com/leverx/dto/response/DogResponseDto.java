@@ -1,6 +1,6 @@
 package com.leverx.dto.response;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.leverx.dto.response.simple.SimpleUserResponseDto;
 import com.leverx.model.entity.EPetType;
@@ -12,17 +12,17 @@ import lombok.Data;
 @Data
 public class DogResponseDto extends PetResponseDto {
 
-  private boolean isGuideDog;
+  private boolean guideDog;
 
   @Builder(builderMethodName = "dogResponseBuilder")
   public DogResponseDto(
           final long id,
           final EPetType petType,
           final String name,
-          final LocalDate birthdate,
+          final Date birthdate,
           final SimpleUserResponseDto owner,
-          final boolean isGuideDog) {
+          final boolean guideDog) {
     super(id, petType, name, birthdate, owner);
-    this.isGuideDog = isGuideDog;
+    this.guideDog = guideDog;
   }
 }

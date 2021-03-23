@@ -22,7 +22,7 @@ public final class CatConverterDto {
     return Cat.catBuilder()
         .name(catRequestDto.getName())
         .birthdate(catRequestDto.getBirthdate())
-        .isBold(catRequestDto.isBold())
+        .bold(catRequestDto.isBold())
         .build();
   }
 
@@ -32,7 +32,7 @@ public final class CatConverterDto {
         .petType(cat.getPetType())
         .name(cat.getName())
         .birthdate(cat.getBirthdate())
-        .isBold(cat.isBold())
+        .bold(cat.isBold())
         .owner(convertUserEntityToSimpleResponse(cat.getOwner()))
         .build();
   }

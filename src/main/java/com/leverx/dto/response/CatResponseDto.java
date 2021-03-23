@@ -1,6 +1,6 @@
 package com.leverx.dto.response;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.leverx.dto.response.simple.SimpleUserResponseDto;
 import com.leverx.model.entity.EPetType;
@@ -12,17 +12,17 @@ import lombok.Data;
 @Data
 public class CatResponseDto extends PetResponseDto {
 
-  private boolean isBold;
+  private boolean bold;
 
   @Builder(builderMethodName = "catResponseBuilder")
   public CatResponseDto(
           final long id,
           final EPetType petType,
           final String name,
-          final LocalDate birthdate,
+          final Date birthdate,
           final SimpleUserResponseDto owner,
-          final boolean isBold) {
+          final boolean bold) {
     super(id, petType, name, birthdate, owner);
-    this.isBold = isBold;
+    this.bold = bold;
   }
 }

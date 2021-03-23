@@ -1,6 +1,6 @@
 package com.leverx.model.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Cat extends Pet {
 
-  private boolean isBold;
+  private boolean bold;
 
   @Builder(builderMethodName = "catBuilder")
   public Cat(
       final long id,
       final EPetType petType,
       final String name,
-      final LocalDate birthdate,
+      final Date birthdate,
       final User owner,
-      final boolean isBold) {
+      final boolean bold) {
     super(id, petType, name, birthdate, owner);
-    this.isBold = isBold;
+    this.bold = bold;
   }
 }
