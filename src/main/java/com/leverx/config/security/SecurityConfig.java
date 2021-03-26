@@ -6,12 +6,12 @@ import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_CATS;
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_DOGS;
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_ODATA;
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_PETS;
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_USERS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_AUTH;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_CATS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_DOGS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_ODATA;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_PETS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_USERS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,19 +20,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.leverx.service.impl.UserDetailsServiceImpl;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final UserDetailsServiceImpl userDetailsService;
+  private final UserDetailsService userDetailsService;
 
   @Autowired
-  public SecurityConfig(final UserDetailsServiceImpl userDetailsService) {
+  public SecurityConfig(final UserDetailsService userDetailsService) {
     this.userDetailsService = userDetailsService;
   }
 

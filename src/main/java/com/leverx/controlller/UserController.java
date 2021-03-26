@@ -1,6 +1,6 @@
 package com.leverx.controlller;
 
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_USERS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_USERS;
 
 import java.net.URI;
 import java.util.List;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leverx.dto.request.UserRequestDto;
-import com.leverx.dto.response.PetResponseDto;
-import com.leverx.dto.response.UserResponseDto;
+import com.leverx.payload.dto.request.UserRequestDto;
+import com.leverx.payload.dto.response.PetResponseDto;
+import com.leverx.payload.dto.response.UserResponseDto;
 import com.leverx.payload.response.MessageResponse;
-import com.leverx.service.UserService;
+import com.leverx.service.entity.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +43,7 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity<List<UserResponseDto>> getAll() {
-    log.info("Get all users request");
+    log.info("UserController. Get all users request");
 
     return ResponseEntity.ok(userService.getAll());
   }
@@ -51,7 +51,7 @@ public class UserController {
   @PostMapping
   public ResponseEntity<UserResponseDto> add(
       @Valid @RequestBody final UserRequestDto userRequestDto, final HttpServletRequest request) {
-    log.info("Create add request: {}", userRequestDto);
+    log.info("UserController. Create add request: {}", userRequestDto);
 
     UserResponseDto userResponseDto = userService.save(userRequestDto);
     String userCreatedLink = request.getRequestURL().toString() + "/" + userResponseDto.getId();
@@ -61,7 +61,7 @@ public class UserController {
 
   @GetMapping("/{id}")
   public ResponseEntity<UserResponseDto> getById(@PathVariable final long id) {
-    log.info("Get user by id request: {}", id);
+    log.info("UserController. Get user by id request: {}", id);
 
     return ResponseEntity.ok(userService.findById(id));
   }
@@ -69,14 +69,14 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<UserResponseDto> update(
       @PathVariable final long id, @Valid @RequestBody final UserRequestDto userRequestDto) {
-    log.info("Update user by id {} request: {}", id, userRequestDto);
+    log.info("UserController. Update user by id {} request: {}", id, userRequestDto);
 
     return ResponseEntity.ok(userService.update(id, userRequestDto));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<MessageResponse> delete(@PathVariable final long id) {
-    log.info("Delete user by id request: {}", id);
+    log.info("UserController. Delete user by id request: {}", id);
 
     userService.delete(id);
     return ResponseEntity.ok(new MessageResponse("User deleted"));
@@ -86,7 +86,7 @@ public class UserController {
   public ResponseEntity<List<PetResponseDto>> getAllUserPets(
       @PathVariable final long id,
       @RequestParam(value = "type", required = false) final String type) {
-    log.info("Get user pets by type request: {}", type);
+    log.info("UserController. Get user pets by type request: {}", type);
 
     return ResponseEntity.ok(userService.getAllPets(id, type));
   }

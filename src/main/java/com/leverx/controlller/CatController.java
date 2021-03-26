@@ -1,6 +1,6 @@
 package com.leverx.controlller;
 
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_CATS;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_CATS;
 
 import java.net.URI;
 import java.util.List;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leverx.dto.request.CatRequestDto;
-import com.leverx.dto.response.CatResponseDto;
+import com.leverx.payload.dto.request.CatRequestDto;
+import com.leverx.payload.dto.response.CatResponseDto;
 import com.leverx.payload.response.MessageResponse;
-import com.leverx.service.CatService;
+import com.leverx.service.entity.CatService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +41,7 @@ public class CatController {
 
   @GetMapping
   public ResponseEntity<List<CatResponseDto>> getAll() {
-    log.info("Get all cats request");
+    log.info("CatController. Get all cats request");
 
     return ResponseEntity.ok(catService.getAll());
   }
@@ -49,7 +49,7 @@ public class CatController {
   @PostMapping
   public ResponseEntity<CatResponseDto> add(
       @Valid @RequestBody final CatRequestDto catRequestDto, final HttpServletRequest request) {
-    log.info("Create cat request: {}", catRequestDto);
+    log.info("CatController. Create cat request: {}", catRequestDto);
 
     CatResponseDto catResponseDto = catService.save(catRequestDto);
     String createdCatLink = request.getRequestURL().toString() + "/" + catResponseDto.getId();
@@ -59,7 +59,7 @@ public class CatController {
 
   @GetMapping("/{id}")
   public ResponseEntity<CatResponseDto> getById(@PathVariable final long id) {
-    log.info("Get cat by id request: {}", id);
+    log.info("CatController. Get cat by id request: {}", id);
 
     return ResponseEntity.ok().body(catService.findById(id));
   }
@@ -67,14 +67,14 @@ public class CatController {
   @PutMapping("/{id}")
   public ResponseEntity<CatResponseDto> update(
       @PathVariable final long id, @Valid @RequestBody final CatRequestDto catRequestDto) {
-    log.info("Update cat by id {} request: {}", id, catRequestDto);
+    log.info("CatController. Update cat by id {} request: {}", id, catRequestDto);
 
     return ResponseEntity.ok().body(catService.update(id, catRequestDto));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<MessageResponse> delete(@PathVariable final long id) {
-    log.info("Delete cat by id request: {}", id);
+    log.info("CatController. Delete cat by id request: {}", id);
 
     catService.delete(id);
     return ResponseEntity.ok().body(new MessageResponse("Cat deleted"));

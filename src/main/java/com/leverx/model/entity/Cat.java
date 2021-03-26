@@ -1,6 +1,6 @@
 package com.leverx.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -25,7 +25,7 @@ public class Cat extends Pet {
       final long id,
       final EPetType petType,
       final String name,
-      final Date birthdate,
+      final LocalDate birthdate,
       final User owner,
       final boolean bold) {
     super(id, petType, name, birthdate, owner);

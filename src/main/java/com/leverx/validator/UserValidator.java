@@ -3,7 +3,7 @@ package com.leverx.validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.leverx.dto.request.UserRequestDto;
+import com.leverx.payload.dto.request.UserRequestDto;
 import com.leverx.repository.UserRepository;
 
 /** @author Andrei Yahorau */
