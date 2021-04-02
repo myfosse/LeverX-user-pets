@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto save(final UserRequestDto userRequestDto) {
-    log.info("UserService. Save user to database: {}", userRequestDto);
+    log.info("Save user to database: {}", userRequestDto);
 
     userValidator.validateUserRequest(userRequestDto);
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto update(final long userId, final UserRequestDto userRequestDto) {
-    log.info("UserService. Update user {} in database by id: {}", userRequestDto, userId);
+    log.info("Update user {} in database by id: {}", userRequestDto, userId);
 
     if (!userRepository.existsById(userId)) {
       throw new EntityNotFoundException("No entity with such id");
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public UserResponseDto findById(final long id) {
-    log.info("UserService. Find user in database by id: {}", id);
+    log.info("Find user in database by id: {}", id);
 
     return convertUserEntityToResponse(
         userRepository
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public List<UserResponseDto> getAll() {
-    log.info("UserService. Get all users from database");
+    log.info("Get all users from database");
 
     return convertUserListOfEntityToListOfResponse(userRepository.findAll());
   }
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public List<PetResponseDto> getAllPets(final long id, final String petType) {
-    log.info("UserService. Get all user pets from database by pet type: {}", petType);
+    log.info("Get all user pets from database by pet type: {}", petType);
 
     if (nonNull(petType)
         && stream(EPetType.values())
@@ -127,10 +127,10 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public void delete(final long id) {
-    log.info("UserService. Delete user from database by id: {}", id);
+    log.info("Delete user from database by id: {}", id);
 
     if (!userRepository.existsById(id)) {
-      log.error("UserService. No user in database with id: {}", id);
+      log.error("No user in database with id: {}", id);
 
       throw new EntityNotFoundException("There is no such user");
     }

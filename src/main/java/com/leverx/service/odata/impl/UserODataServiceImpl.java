@@ -51,7 +51,7 @@ public class UserODataServiceImpl implements UserODataService {
   @Override
   public Object getRelatedData(final Object sourceData, final String targetEntityName)
       throws ODataNotFoundException {
-    log.info("UserODataService. Get related data");
+    log.info("Get related data");
 
     UserOData user = (UserOData) sourceData;
     if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
@@ -62,7 +62,7 @@ public class UserODataServiceImpl implements UserODataService {
 
   @Override
   public UserOData findById(final long id) {
-    log.info("UserODataService. Find user in database by id: {}", id);
+    log.info("Find user in database by id: {}", id);
 
     return convertUserEntityToOData(
         userRepository
@@ -72,7 +72,7 @@ public class UserODataServiceImpl implements UserODataService {
 
   @Override
   public List<UserOData> findAll() {
-    log.info("UserODataService. Get all users from database");
+    log.info("Get all users from database");
 
     return convertUserListOfEntityToListOfOData(userRepository.findAll());
   }
@@ -80,17 +80,17 @@ public class UserODataServiceImpl implements UserODataService {
   @Override
   @Transactional
   public void deleteById(final long id) {
-    log.info("UserODataService. Delete user by id");
+    log.info("Delete user by id");
 
     petRepository.removeAllOwnerIdReference(id);
     userRepository.deleteById(id);
   }
 
   @Override
-  public void save(final Object odataEntity) {
-    log.info("UserODataService. Save new user {}", odataEntity);
+  public void save(final UserOData odataEntity) {
+    log.info("Save new user {}", odataEntity);
 
-    User user = convertUserODataToEntity((UserOData) odataEntity);
+    User user = convertUserODataToEntity(odataEntity);
 
     String password = passwordEncoder.encode(user.getPassword());
 
@@ -104,7 +104,7 @@ public class UserODataServiceImpl implements UserODataService {
 
   @Override
   public UserOData getODataObject() {
-    log.info("UserODataService. Get ODataObject");
+    log.info("Get ODataObject");
 
     return new UserOData();
   }

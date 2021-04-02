@@ -15,7 +15,7 @@ public interface ODataService<T> {
 
   void deleteById(final long id);
 
-  void save(final Object odataEntity);
+  void save(final T odataEntity);
 
   T getODataObject();
 }

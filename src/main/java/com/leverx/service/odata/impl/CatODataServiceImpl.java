@@ -4,6 +4,7 @@ import static java.time.LocalDate.now;
 
 import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
 
+import static com.leverx.constant.odata.ODataModelConstants.ENTITY_SET_NAME_USERS;
 import static com.leverx.converter.odata.CatConverterOData.convertCatEntityToOData;
 import static com.leverx.converter.odata.CatConverterOData.convertCatListOfEntityToListOfOData;
 import static com.leverx.converter.odata.CatConverterOData.convertCatODataToEntity;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.leverx.model.entity.Cat;
 import com.leverx.model.entity.User;
 import com.leverx.model.odata.CatOData;
-import com.leverx.model.odata.UserOData;
 import com.leverx.repository.CatRepository;
 import com.leverx.repository.UserRepository;
 import com.leverx.service.odata.CatODataService;
@@ -46,14 +46,18 @@ public class CatODataServiceImpl implements CatODataService {
   @Override
   public Object getRelatedData(final Object sourceData, final String targetEntityName)
       throws ODataNotFoundException {
-    log.info("CatODataService. Get related data");
+    log.info("Get related data");
 
+    CatOData cat = (CatOData) sourceData;
+    if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
+      return cat.getOwner();
+    }
     throw new ODataNotFoundException(ENTITY);
   }
 
   @Override
   public CatOData findById(final long id) {
-    log.info("CatODataService. Find cat in database by id: {}", id);
+    log.info("Find cat in database by id: {}", id);
 
     return convertCatEntityToOData(
         catRepository
@@ -63,28 +67,26 @@ public class CatODataServiceImpl implements CatODataService {
 
   @Override
   public List<CatOData> findAll() {
-    log.info("CatODataService. Get all cats from database");
+    log.info("Get all cats from database");
 
     return convertCatListOfEntityToListOfOData(catRepository.findAll());
   }
 
   @Override
   public void deleteById(final long id) {
-    log.info("CatODataService. Delete cat by id");
+    log.info("Delete cat by id");
 
     catRepository.deleteById(id);
   }
 
   @Override
   @Transactional
-  public void save(final Object odataEntity) {
-    log.info("CatODataService. Save cat");
+  public void save(final CatOData odataEntity) {
+    log.info("Save cat");
 
-    CatOData catOData = (CatOData) odataEntity;
-
-    Cat cat = convertCatODataToEntity(catOData);
+    Cat cat = convertCatODataToEntity(odataEntity);
     User user = userRepository
-            .findById(catOData.getUserId())
+            .findById(odataEntity.getUserId())
             .orElseThrow(() -> new EntityNotFoundException("No user with such id"));
     cat.setOwner(user);
     cat.setBirthdate(now());
@@ -95,7 +97,7 @@ public class CatODataServiceImpl implements CatODataService {
 
   @Override
   public CatOData getODataObject() {
-    log.info("CatODataService. Get ODataObject");
+    log.info("Get ODataObject");
 
     return new CatOData();
   }

@@ -39,7 +39,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto save(final DogRequestDto dogRequestDto) {
-    log.info("DogService. Save dog to database: {}", dogRequestDto);
+    log.info("Save dog to database: {}", dogRequestDto);
 
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
@@ -54,7 +54,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto update(final long dogId, final DogRequestDto dogRequestDto) {
-    log.info("DogService. Update dog {} in database by id: {}", dogRequestDto, dogId);
+    log.info("Update dog {} in database by id: {}", dogRequestDto, dogId);
 
     Dog dog = convertDogRequestToEntity(dogRequestDto);
     dog.setOwner(
@@ -74,7 +74,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public DogResponseDto findById(final long id) {
-    log.info("DogService. Find dog in database by id: {}", id);
+    log.info("Find dog in database by id: {}", id);
 
     return convertDogEntityToResponse(
         dogRepository
@@ -85,7 +85,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public List<DogResponseDto> getAll() {
-    log.info("DogService. Get all dogs from database");
+    log.info("Get all dogs from database");
 
     return convertDogListOfEntityToListOfResponse(dogRepository.findAll());
   }
@@ -93,7 +93,7 @@ public class DogServiceImpl implements DogService {
   @Override
   @Transactional
   public void delete(final long id) {
-    log.info("DogService. Delete dog from database by id: {}", id);
+    log.info("Delete dog from database by id: {}", id);
 
     if (!dogRepository.existsById(id)) {
       log.error("No dog in database with id: {}", id);

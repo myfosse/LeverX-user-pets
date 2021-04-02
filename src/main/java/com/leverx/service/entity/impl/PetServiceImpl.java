@@ -32,7 +32,7 @@ public class PetServiceImpl implements PetService {
   @Override
   @Transactional
   public PetResponseDto findById(final long id) {
-    log.info("PetService. Find pet in database by id: {}", id);
+    log.info("Find pet in database by id: {}", id);
 
     return convertPetEntityToResponse(
         petRepository
@@ -43,7 +43,7 @@ public class PetServiceImpl implements PetService {
   @Override
   @Transactional
   public List<PetResponseDto> getAll() {
-    log.info("PetService.Get all pets from database");
+    log.info("Get all pets from database");
 
     return convertPetListOfEntityToListOfResponse(petRepository.findAll());
   }
@@ -51,7 +51,7 @@ public class PetServiceImpl implements PetService {
   @Override
   @Transactional
   public void delete(final long id) {
-    log.info("PetService.Delete pet from database by id: {}", id);
+    log.info("Delete pet from database by id: {}", id);
 
     if (!petRepository.existsById(id)) {
       log.error("No pet in database with id: {}", id);

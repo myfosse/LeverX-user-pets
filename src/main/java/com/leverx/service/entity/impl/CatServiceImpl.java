@@ -39,7 +39,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto save(final CatRequestDto catRequestDto) {
-    log.info("CatService. Save cat to database: {}", catRequestDto);
+    log.info("Save cat to database: {}", catRequestDto);
 
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
@@ -54,7 +54,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto update(final long catId, final CatRequestDto catRequestDto) {
-    log.info("CatService. Update cat {} in database by id: {}", catRequestDto, catId);
+    log.info("Update cat {} in database by id: {}", catRequestDto, catId);
 
     Cat cat = convertCatRequestToEntity(catRequestDto);
     cat.setOwner(
@@ -74,7 +74,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public CatResponseDto findById(final long id) {
-    log.info("CatService. Find cat in database by id: {}", id);
+    log.info("Find cat in database by id: {}", id);
 
     return convertCatEntityToResponse(
         catRepository
@@ -85,7 +85,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public List<CatResponseDto> getAll() {
-    log.info("CatService. Get all cats from database");
+    log.info("Get all cats from database");
 
     return convertCatListOfEntityToListOfResponse(catRepository.findAll());
   }
@@ -93,7 +93,7 @@ public class CatServiceImpl implements CatService {
   @Override
   @Transactional
   public void delete(final long id) {
-    log.info("CatService. Delete cat from database by id: {}", id);
+    log.info("Delete cat from database by id: {}", id);
 
     if (!catRepository.existsById(id)) {
       log.error("No cat in database with id: {}", id);

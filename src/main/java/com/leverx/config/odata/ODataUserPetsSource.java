@@ -51,7 +51,7 @@ public class ODataUserPetsSource implements DataSource {
   @Override
   public List<?> readData(final EdmEntitySet entitySet)
       throws EdmException, ODataNotFoundException {
-    log.info("ODataUserPetsSource. Read data");
+    log.info("Read data");
 
     String entitySetName = entitySet.getName();
 
@@ -65,7 +65,7 @@ public class ODataUserPetsSource implements DataSource {
   @Override
   public Object readData(final EdmEntitySet entitySet, final Map<String, Object> keys)
       throws ODataNotFoundException, EdmException {
-    log.info("ODataUserPetsSource. Read data by id");
+    log.info("Read data by id");
 
     String entitySetName = entitySet.getName();
 
@@ -94,7 +94,7 @@ public class ODataUserPetsSource implements DataSource {
       final EdmEntitySet targetEntitySet,
       final Map<String, Object> targetKeys)
       throws EdmException, ODataNotFoundException {
-    log.info("ODataUserPetsSource. Read related Data");
+    log.info("Read related Data");
 
     String sourceEntityName = sourceEntitySet.getName();
     String targetEntityName = targetEntitySet.getName();
@@ -110,7 +110,7 @@ public class ODataUserPetsSource implements DataSource {
 
   @Override
   public Object newDataObject(final EdmEntitySet entitySet) throws EdmException {
-    log.info("ODataUserPetsSource. New data object");
+    log.info("Create new data object");
 
     String entitySetName = entitySet.getName();
 
@@ -127,7 +127,7 @@ public class ODataUserPetsSource implements DataSource {
   @Override
   public void deleteData(final EdmEntitySet entitySet, final Map<String, Object> keys)
       throws EdmException {
-    log.info("ODataUserPetsSource. Delete data by id");
+    log.info("Delete data by id");
 
     String entitySetName = entitySet.getName();
 
@@ -140,7 +140,7 @@ public class ODataUserPetsSource implements DataSource {
 
   @Override
   public void createData(final EdmEntitySet entitySet, final Object data) throws EdmException {
-    log.info("ODataUserPetsSource. Create data object {}", data);
+    log.info("Create data object {}", data);
 
     String entitySetName = entitySet.getName();
     odataMap.get(entitySetName).save(data);

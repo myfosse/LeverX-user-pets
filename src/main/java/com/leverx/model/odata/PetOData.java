@@ -45,6 +45,9 @@ public class PetOData {
   @EdmProperty(type = INT64)
   private long id;
 
+  @EdmProperty(type = INT64)
+  private Long userId;
+
   @EdmProperty(type = STRING)
   private String name;
 

@@ -11,6 +11,8 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.Collections;
 import java.util.List;
 
+import com.leverx.model.entity.Dog;
+import com.leverx.model.entity.EPetType;
 import com.leverx.model.entity.Pet;
 import com.leverx.model.odata.PetOData;
 
@@ -23,10 +25,18 @@ public final class PetConverterOData {
   public static PetOData convertPetEntityToOData(final Pet pet) {
     return PetOData.builder()
         .id(pet.getId())
+        .userId(pet.getOwner().getId())
         .petType(pet.getPetType().name())
         .name(pet.getName())
         .birthdate(toDate(pet.getBirthdate()))
         .owner(convertUserEntityToSimpleOData(pet.getOwner()))
+        .build();
+  }
+
+  public static Pet convertPetODataToEntity(final PetOData pet) {
+    return Dog.dogBuilder()
+        .name(pet.getName())
+        .petType(EPetType.valueOf(pet.getPetType().toUpperCase()))
         .build();
   }
 
