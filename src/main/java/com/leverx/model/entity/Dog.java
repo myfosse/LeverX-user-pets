@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Dog extends Pet {
 
-  private boolean isGuideDog;
+  private boolean guideDog;
 
   @Builder(builderMethodName = "dogBuilder")
   public Dog(
@@ -27,8 +27,8 @@ public class Dog extends Pet {
       final String name,
       final LocalDate birthdate,
       final User owner,
-      final boolean isGuideDog) {
+      final boolean guideDog) {
     super(id, petType, name, birthdate, owner);
-    this.isGuideDog = isGuideDog;
+    this.guideDog = guideDog;
   }
 }

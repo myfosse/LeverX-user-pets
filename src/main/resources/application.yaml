@@ -1,13 +1,10 @@
 spring:
-  h2:
-    console:
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:pets
-    username: sa
-    password: sa
-    platform: org.hibernate.dialect.H2Dialect
-    driver-class-name: org.h2.Driver
+    url: ${vcap.services.PostgreSQL.credentials.url:jdbc:postgresql://localhost:5433/pets}
+    username: ${vcap.services.PostgreSQL.credentials.username:postgres}
+    password: ${vcap.services.PostgreSQL.credentials.password:postgres}
+    platform: POSTGRESQL
+    driver-class-name: org.postgresql.Driver
     initialization-mode: embedded
   jpa:
     hibernate:

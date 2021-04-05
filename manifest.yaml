@@ -1,4 +1,5 @@
 applications:
+
   - name: user-pets
     instances: 1
     memory: 1G
@@ -7,3 +8,5 @@ applications:
     buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.35
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
+    services:
+      - PostgreSQL

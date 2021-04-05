@@ -1,6 +1,6 @@
 package com.leverx.controlller;
 
-import static com.leverx.constant.controller.ControllerConstant.ENDPOINT_AUTH;
+import static com.leverx.constant.controller.ControllerConstants.ENDPOINT_AUTH;
 
 import java.net.URI;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leverx.dto.request.UserRequestDto;
-import com.leverx.dto.response.UserResponseDto;
-import com.leverx.service.UserService;
+import com.leverx.payload.dto.request.UserRequestDto;
+import com.leverx.payload.dto.response.UserResponseDto;
+import com.leverx.service.entity.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +36,7 @@ public class AuthController {
   @PostMapping("sign-up")
   public ResponseEntity<UserResponseDto> signUp(
       @Valid @RequestBody final UserRequestDto userRequestDto, final HttpServletRequest request) {
-    log.info("Sign up request: {}", userRequestDto);
+    log.info("AuthController. Sign up request: {}", userRequestDto);
 
     UserResponseDto userResponseDto = userService.save(userRequestDto);
     String createdUserLink =

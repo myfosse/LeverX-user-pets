@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Cat extends Pet {
 
-  private boolean isBold;
+  private boolean bold;
 
   @Builder(builderMethodName = "catBuilder")
   public Cat(
@@ -27,8 +27,8 @@ public class Cat extends Pet {
       final String name,
       final LocalDate birthdate,
       final User owner,
-      final boolean isBold) {
+      final boolean bold) {
     super(id, petType, name, birthdate, owner);
-    this.isBold = isBold;
+    this.bold = bold;
   }
 }

@@ -1,6 +1,7 @@
 package com.leverx.model.entity;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.time.LocalDate;
@@ -27,8 +28,9 @@ import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(
+    name = "users",
+    uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Data
 @Builder(builderMethodName = "userBuilder")
 @NoArgsConstructor
@@ -52,7 +54,7 @@ public class User {
 
   private String password;
 
-  @OneToMany(mappedBy = "owner")
+  @OneToMany(mappedBy = "owner", fetch = EAGER)
   private List<Pet> pets;
 
   @Enumerated(value = STRING)

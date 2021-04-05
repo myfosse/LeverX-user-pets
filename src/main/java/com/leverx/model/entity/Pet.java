@@ -1,7 +1,7 @@
 package com.leverx.model.entity;
 
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -49,7 +49,7 @@ public abstract class Pet {
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate birthdate;
 
-  @ManyToOne(fetch = LAZY)
+  @ManyToOne(fetch = EAGER)
   @JoinColumn(name = "owner_id")
   private User owner;
 }
